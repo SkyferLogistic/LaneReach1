@@ -1,0 +1,124 @@
+# Engine walkthrough: office -> sender -> company -> contact -> template -> workflow ->
+# tag the contact (trigger) -> watch the enrollment, steps and outbox.
+# Get an admin dev token first (02-auth.http) and paste it below.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+
+### Office (the voice emails are sent in)
+# @name office
+POST {{baseUrl}}/offices
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name": "UAE", "country": "AE", "timezone": "Asia/Dubai", "owner_name": "Omar", "owner_email": "omar@forwarder.example"}
+
+### Sender mailbox
+POST {{baseUrl}}/senders
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"office_id": "{{office.response.body.id}}", "display_name": "Maya Rahman", "email": "maya@forwarder.example", "daily_cap": 50}
+
+### Company
+# @name company
+POST {{baseUrl}}/companies
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name": "Gulf Importers LLC", "domain": "gulf-importers.example", "country": "AE", "branches": [{"name": "Dubai", "country": "AE"}]}
+
+### Contact (publishes contact.created)
+# @name contact
+POST {{baseUrl}}/contacts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"email": "ahmed@gulf-importers.example", "first_name": "Ahmed", "country": "AE", "company_id": "{{company.response.body.id}}", "office_id": "{{office.response.body.id}}"}
+
+### Templates
+POST {{baseUrl}}/templates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"key": "intro", "language": "en", "name": "Intro", "subject": "Shipping to {{company.name}}", "body": "Hello {{contact.first_name|there}},\n\nMaya from {{office.name}}.\n\n{{sender.name}}"}
+
+###
+POST {{baseUrl}}/templates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"key": "follow_up_1", "language": "en", "name": "Follow-up", "subject": "Following up", "body": "Hi {{contact.first_name|there}}, any lanes we can quote?\n\n{{sender.name}}"}
+
+### Workflow: tag trigger -> intro -> wait 5 business days -> follow-up -> stop
+# @name workflow
+POST {{baseUrl}}/automation/workflows
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "UAE intro sequence",
+  "graph": {
+    "trigger": {"id": "trigger", "type": "trigger_tag_added", "config": {"tag": "uae"}},
+    "nodes": [
+      {"id": "intro", "type": "send_email", "config": {"office_id": "{{office.response.body.id}}", "template_key": "intro"}},
+      {"id": "wait", "type": "wait_business_days", "config": {"days": 5}},
+      {"id": "follow", "type": "send_email", "config": {"office_id": "{{office.response.body.id}}", "template_key": "follow_up_1"}},
+      {"id": "done", "type": "stop", "config": {}}
+    ],
+    "edges": [
+      {"source": "trigger", "target": "intro"},
+      {"source": "intro", "target": "wait"},
+      {"source": "wait", "target": "follow"},
+      {"source": "follow", "target": "done"}
+    ]
+  }
+}
+
+### Simulate before publishing (nothing is stored)
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/test-run
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"contact_id": "{{contact.response.body.id}}"}
+
+### Publish
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/publish
+Authorization: Bearer {{token}}
+
+### Trigger it: tag the contact
+POST {{baseUrl}}/contacts/{{contact.response.body.id}}/tags
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"tag": "uae"}
+
+### The enrollment (waiting on a guardrail or the 5-day wait)
+# @name enrollments
+GET {{baseUrl}}/automation/enrollments?workflow_id={{workflow.response.body.id}}
+Authorization: Bearer {{token}}
+
+### Every step with its guardrail decisions
+GET {{baseUrl}}/automation/enrollments/{{enrollments.response.body.items[0].id}}/steps
+Authorization: Bearer {{token}}
+
+### Skip the wait (dev/staging testing aid; guardrails still apply)
+POST {{baseUrl}}/automation/enrollments/{{enrollments.response.body.items[0].id}}/wake
+Authorization: Bearer {{token}}
+
+### What the dry-run provider "sent"
+GET {{baseUrl}}/outbox
+Authorization: Bearer {{token}}
+
+### Kill switch: pause all sending
+PATCH {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"sending_paused": true}
+
+### Resume
+PATCH {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"sending_paused": false}

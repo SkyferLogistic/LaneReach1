@@ -1,0 +1,67 @@
+# AI tasks called directly (nothing is stored except the AI run), AI runs and reply policies.
+# Rate limited per tenant and per caller (429 + Retry-After). Needs scope ai:run.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@officeId = PASTE-AN-OFFICE-ID
+
+### Classify a reply (rules first, LLM otherwise)
+# @name classified
+POST {{baseUrl}}/ai/replies/classify
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"subject": "Re: Shipping to Gulf Importers", "body": "Please quote 2x40HC Chennai to Rotterdam, monthly, FOB.", "office_name": "UAE", "contact_country": "AE"}
+
+### Automatic replies never reach the LLM (source: rules)
+POST {{baseUrl}}/ai/replies/classify
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"subject": "Automatic reply", "body": "I am out of the office, back on 12 October."}
+
+### Extract shipment details
+POST {{baseUrl}}/ai/replies/extract-shipment
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"body": "We ship 3x40HC of ceramic tiles from Valencia to Jebel Ali every month, CIF."}
+
+### Draft a reply in the office's voice (not sent)
+POST {{baseUrl}}/ai/replies/draft
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"office_id": "{{officeId}}", "body": "Sounds good, tell me more about your rates to Jeddah.", "bucket": "interested", "language": "en", "tone": "friendly"}
+
+### Localize a template (placeholders are preserved exactly)
+POST {{baseUrl}}/ai/templates/localize
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"subject": "Shipping to {{company.name}}", "body": "Hello {{contact.first_name|there}},\n\n{{sender.name}}", "target_language": "fr", "region": "FR"}
+
+### AI runs (usage, latency, cost; never the email text)
+GET {{baseUrl}}/ai/runs?task=classify_reply&limit=20
+Authorization: Bearer {{token}}
+
+### One AI run
+GET {{baseUrl}}/ai/runs/{{classified.response.body.ai_run_id}}
+Authorization: Bearer {{token}}
+
+### Reply policy for every bucket
+GET {{baseUrl}}/ai/reply-policies
+Authorization: Bearer {{token}}
+
+### Forward partnership questions... (conversational buckets only; admin only)
+PUT {{baseUrl}}/ai/reply-policies/meeting_request
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"action_mode": "forward_to_owner"}
+
+### Protective buckets are fixed (422)
+PUT {{baseUrl}}/ai/reply-policies/complaint
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"action_mode": "draft_for_review"}

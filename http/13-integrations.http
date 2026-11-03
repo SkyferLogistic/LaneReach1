@@ -1,0 +1,87 @@
+# Integrations: signed webhooks (Zapier, Make, n8n), Slack, Calendly / Cal.com, verification, forms.
+# Admin token for /integrations; secrets are write-only (only a hint comes back).
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@webhookId = PASTE-A-WEBHOOK-ID
+@connectionId = PASTE-A-CONNECTION-ID
+@contactId = PASTE-A-CONTACT-ID
+@formKey = PASTE-A-FORM-PUBLIC-KEY
+
+### Everything on the Integrations page
+GET {{baseUrl}}/integrations
+Authorization: Bearer {{token}}
+
+### Subscribe a Zapier catch hook to new quote requests and won deals (the secret is shown once)
+POST {{baseUrl}}/integrations/webhooks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Zapier: new quote requests",
+  "url": "https://hooks.zapier.com/hooks/catch/123/abc/",
+  "event_types": ["lead.created", "deal.won"]
+}
+
+### Send a signed ping now
+POST {{baseUrl}}/integrations/webhooks/{{webhookId}}/test
+Authorization: Bearer {{token}}
+
+### Delivery log (retry a dead one with POST /integrations/deliveries/{id}/retry)
+GET {{baseUrl}}/integrations/deliveries?target_id={{webhookId}}
+Authorization: Bearer {{token}}
+
+### Slack alerts in a channel
+POST {{baseUrl}}/integrations/connections
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "kind": "slack",
+  "name": "#pricing",
+  "secret": "https://hooks.slack.com/services/T000/B000/XXXX",
+  "config": {"alerts": ["positive_reply", "new_lead", "deal_won", "meeting_booked"]}
+}
+
+### Test the Slack channel
+POST {{baseUrl}}/integrations/connections/{{connectionId}}/test
+Authorization: Bearer {{token}}
+
+### Calendly: the response's webhook_url goes into the Calendly webhook subscription
+POST {{baseUrl}}/integrations/connections
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "kind": "calendly",
+  "name": "Sales calendar",
+  "secret": "a-signing-key-of-your-choice",
+  "config": {"office_id": null}
+}
+
+### Verify one contact's address (mock rules until MillionVerifier is connected)
+POST {{baseUrl}}/contacts/{{contactId}}/verify-email
+Authorization: Bearer {{token}}
+
+### Verify up to 200 contacts never verified
+POST {{baseUrl}}/contacts/verify-emails
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"limit": 200}
+
+### A website quote form (the response carries the embed HTML)
+POST {{baseUrl}}/forms
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Request a quote",
+  "tag": "website-quote",
+  "fields": ["first_name", "last_name", "company", "origin", "destination", "mode", "message"]
+}
+
+### What the website sends (public, no token)
+POST {{baseUrl}}/public/forms/{{formKey}}
+Content-Type: application/x-www-form-urlencoded
+
+email=buyer%40shipper.example&first_name=Sam&origin=Toronto&destination=Istanbul&mode=air&website=

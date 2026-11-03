@@ -1,0 +1,15 @@
+# CI test runner: runs `make check` inside the image's toolchain with access to the Docker
+# socket so testcontainers can start Postgres and Redis next to it.
+services:
+  tests:
+    image: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      UV_LINK_MODE: copy
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["sh", "-c", "uv sync --frozen && uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest"]

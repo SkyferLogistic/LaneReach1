@@ -1,0 +1,92 @@
+# Automation operations: node details, unsaved-graph validation, versions, archiving,
+# enrollments (enroll, pause, resume, cancel, run now), events and the dispatcher.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@workflowId = PASTE-A-WORKFLOW-ID
+@contactId = PASTE-A-CONTACT-ID
+@officeId = PASTE-AN-OFFICE-ID
+
+### One node type: config JSON Schema (what the canvas renders as a form) and handles
+GET {{baseUrl}}/automation/nodes/branch_on_reply_bucket
+Authorization: Bearer {{token}}
+
+### Validate a graph without saving it (live validation on the canvas)
+POST {{baseUrl}}/automation/workflows/validate-graph
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"graph": {"trigger": {"id": "t", "type": "trigger_manual_enroll", "config": {}}, "nodes": [{"id": "s1", "type": "send_email", "config": {"office_id": "{{officeId}}", "template_key": "intro"}}, {"id": "s2", "type": "send_email", "config": {"office_id": "{{officeId}}", "template_key": "follow_up_1"}}], "edges": [{"source": "t", "target": "s1"}, {"source": "s1", "target": "s2"}]}}
+
+### One workflow (current and latest version)
+GET {{baseUrl}}/automation/workflows/{{workflowId}}
+Authorization: Bearer {{token}}
+
+### One stored version (immutable)
+GET {{baseUrl}}/automation/workflows/{{workflowId}}/versions/1
+Authorization: Bearer {{token}}
+
+### Archive (no new enrollments; open ones stop)
+POST {{baseUrl}}/automation/workflows/{{workflowId}}/archive
+Authorization: Bearer {{token}}
+Idempotency-Key: archive-1
+
+### Enroll contacts in a published workflow
+# @name enrolled
+POST {{baseUrl}}/automation/workflows/{{workflowId}}/enrollments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: enroll-1
+
+{"contact_ids": ["{{contactId}}"]}
+
+### One enrollment (status, next run, variables such as reply/lead/draft)
+GET {{baseUrl}}/automation/enrollments/{{enrolled.response.body.0.enrollment_id}}
+Authorization: Bearer {{token}}
+
+### Pause it
+POST {{baseUrl}}/automation/enrollments/{{enrolled.response.body.0.enrollment_id}}/pause
+Authorization: Bearer {{token}}
+Idempotency-Key: pause-1
+
+### Resume it
+POST {{baseUrl}}/automation/enrollments/{{enrolled.response.body.0.enrollment_id}}/resume
+Authorization: Bearer {{token}}
+Idempotency-Key: resume-1
+
+### Run it now (dev/staging: advance without waiting for the dispatcher)
+POST {{baseUrl}}/automation/enrollments/{{enrolled.response.body.0.enrollment_id}}/advance
+Authorization: Bearer {{token}}
+
+### Cancel it
+POST {{baseUrl}}/automation/enrollments/{{enrolled.response.body.0.enrollment_id}}/cancel
+Authorization: Bearer {{token}}
+Idempotency-Key: cancel-1
+
+### Publish a custom event (for example from a CRM integration)
+POST {{baseUrl}}/automation/events
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"type": "contact.tag_added", "contact_id": "{{contactId}}", "payload": {"tag": "intro"}, "idempotency_key": "crm-sync-42"}
+
+### Events and what they started
+GET {{baseUrl}}/automation/events?contact_id={{contactId}}
+Authorization: Bearer {{token}}
+
+### Run the dispatcher now for this tenant (admin; normally every 30 s on Celery beat)
+POST {{baseUrl}}/automation/dispatch
+Authorization: Bearer {{token}}
+
+### Custom event from a CRM or website form (an API key with events:write works too).
+# Starts workflows whose trigger is "Custom event" with event name `quote_requested`;
+# the other simple values become enrollment variables (enrollment.variables.lane).
+POST {{baseUrl}}/automation/events
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: web-quote-001
+
+{
+  "type": "custom.event",
+  "contact_email": "buyer@importer.example",
+  "payload": {"name": "quote_requested", "lane": "YYZ-IST", "mode": "air"}
+}

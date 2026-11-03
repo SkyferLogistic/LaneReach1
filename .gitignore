@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Tooling
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+reports/
+.audit-requirements.txt
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Evaluation output
+evals/reports/*
+!evals/reports/.gitkeep
+
+# Editors / OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Local scripts library (development)
+var/
+
+# Tests are kept out of this repository.
+tests/
+web/src/**/*.test.ts
+web/src/**/*.test.tsx

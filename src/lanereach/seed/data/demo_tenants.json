@@ -1,0 +1,2329 @@
+{
+ "tenants": [
+  {
+   "name": "Skyfer Logistics",
+   "slug": "skyfer-logistics",
+   "offices": [
+    {
+     "key": "usa",
+     "name": "USA/Canada",
+     "country": "US",
+     "timezone": "America/New_York",
+     "default_language": "en",
+     "owner_name": "Mavis Carter",
+     "owner_email": "usa.owner@skyfer-logistics.example",
+     "signature": "Skyfer Logistics USA/Canada"
+    },
+    {
+     "key": "fr",
+     "name": "France",
+     "country": "FR",
+     "timezone": "Europe/Paris",
+     "default_language": "fr",
+     "owner_name": "Julien Lambert",
+     "owner_email": "france.owner@skyfer-logistics.example",
+     "signature": "Skyfer Logistics France"
+    },
+    {
+     "key": "es",
+     "name": "Spain",
+     "country": "ES",
+     "timezone": "Europe/Madrid",
+     "default_language": "es",
+     "owner_name": "Hugo Navarro",
+     "owner_email": "spain.owner@skyfer-logistics.example",
+     "signature": "Skyfer Logistics España"
+    },
+    {
+     "key": "ae",
+     "name": "UAE",
+     "country": "AE",
+     "timezone": "Asia/Dubai",
+     "default_language": "en",
+     "owner_name": "Omar Rahman",
+     "owner_email": "uae.owner@skyfer-logistics.example",
+     "signature": "Skyfer Logistics UAE"
+    },
+    {
+     "key": "lk",
+     "name": "Sri Lanka",
+     "country": "LK",
+     "timezone": "Asia/Colombo",
+     "default_language": "en",
+     "owner_name": "Sanjay Wickrama",
+     "owner_email": "lk.owner@skyfer-logistics.example",
+     "signature": "Skyfer Logistics Sri Lanka"
+    }
+   ],
+   "senders": [
+    {
+     "office": "usa",
+     "display_name": "Mavis Carter",
+     "email": "mavis@skyfer-logistics.example",
+     "service_line": "air",
+     "job_title": "Marketing Executive"
+    },
+    {
+     "office": "usa",
+     "display_name": "Maya Brooks",
+     "email": "maya@skyfer-logistics.example",
+     "service_line": "ocean",
+     "job_title": "Marketing Executive"
+    },
+    {
+     "office": "fr",
+     "display_name": "Julien Lambert",
+     "email": "julien@skyfer-logistics.example",
+     "service_line": "air",
+     "job_title": "Business Development Manager"
+    },
+    {
+     "office": "es",
+     "display_name": "Hugo Navarro",
+     "email": "hugo@skyfer-logistics.example",
+     "service_line": "ocean",
+     "job_title": "Business Development Manager"
+    },
+    {
+     "office": "ae",
+     "display_name": "Aisha Rahman",
+     "email": "uae@skyfer-logistics.example",
+     "service_line": "air",
+     "job_title": "Sales Executive"
+    },
+    {
+     "office": "lk",
+     "display_name": "Kasun Perera",
+     "email": "srilanka@skyfer-logistics.example",
+     "service_line": "ocean",
+     "job_title": "Sales Executive"
+    }
+   ],
+   "companies": [
+    {
+     "name": "Gulf Importers",
+     "domain": "gulf-importers.example",
+     "country": "AE",
+     "industry": "Trading",
+     "office": "ae",
+     "branches": [
+      {
+       "name": "Abu Dhabi branch",
+       "country": "AE",
+       "city": "Abu Dhabi"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Ahmed",
+       "last_name": "Khan",
+       "email": "ahmed.khan@gulf-importers.example",
+       "job_title": "Logistics Manager",
+       "city": "Dubai",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Fatima",
+       "last_name": "Al Mansoori",
+       "email": "fatima@gulf-importers.example",
+       "job_title": "Supply Chain Director",
+       "city": "Dubai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Desert Rose Trading",
+     "domain": "desert-rose-trading.example",
+     "country": "AE",
+     "industry": "Electronics",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Fatima",
+       "last_name": "Al Mansoori",
+       "email": "fatima.al-mansoori@desert-rose-trading.example",
+       "job_title": "Procurement Manager",
+       "city": "Abu Dhabi",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Emirates Retail Supply",
+     "domain": "emirates-retail-supply.example",
+     "country": "AE",
+     "industry": "FMCG",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Omar",
+       "last_name": "Haddad",
+       "email": "omar.haddad@emirates-retail-supply.example",
+       "job_title": "Supply Chain Director",
+       "city": "Sharjah",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Palm Coast Foods",
+     "domain": "palm-coast-foods.example",
+     "country": "AE",
+     "industry": "Trading",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Layla",
+       "last_name": "Nasser",
+       "email": "layla.nasser@palm-coast-foods.example",
+       "job_title": "Import Manager",
+       "city": "Dubai",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Yousef",
+       "last_name": "Karim",
+       "email": "yousef@palm-coast-foods.example",
+       "job_title": "Purchasing Lead",
+       "city": "Dubai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Falcon Electronics",
+     "domain": "falcon-electronics.example",
+     "country": "AE",
+     "industry": "Electronics",
+     "office": "ae",
+     "branches": [
+      {
+       "name": "Sharjah branch",
+       "country": "AE",
+       "city": "Sharjah"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Yousef",
+       "last_name": "Karim",
+       "email": "yousef.karim@falcon-electronics.example",
+       "job_title": "Head of Operations",
+       "city": "Abu Dhabi",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Red Sea Builders",
+     "domain": "red-sea-builders.example",
+     "country": "SA",
+     "industry": "Construction",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Khalid",
+       "last_name": "Al Otaibi",
+       "email": "khalid.al-otaibi@red-sea-builders.example",
+       "job_title": "Purchasing Lead",
+       "city": "Riyadh",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Najd Retail Group",
+     "domain": "najd-retail-group.example",
+     "country": "SA",
+     "industry": "Retail",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Noura",
+       "last_name": "Al Harbi",
+       "email": "noura.al-harbi@najd-retail-group.example",
+       "job_title": "Logistics Manager",
+       "city": "Jeddah",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Faisal",
+       "last_name": "Qahtani",
+       "email": "faisal@najd-retail-group.example",
+       "job_title": "Supply Chain Director",
+       "city": "Jeddah",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Arabian Polymers",
+     "domain": "arabian-polymers.example",
+     "country": "SA",
+     "industry": "Petrochemicals",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Faisal",
+       "last_name": "Qahtani",
+       "email": "faisal.qahtani@arabian-polymers.example",
+       "job_title": "Procurement Manager",
+       "city": "Dammam",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Hijaz Home Goods",
+     "domain": "hijaz-home-goods.example",
+     "country": "SA",
+     "industry": "Construction",
+     "office": "ae",
+     "branches": [
+      {
+       "name": "Jeddah branch",
+       "country": "SA",
+       "city": "Jeddah"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Reem",
+       "last_name": "Shehri",
+       "email": "reem.shehri@hijaz-home-goods.example",
+       "job_title": "Supply Chain Director",
+       "city": "Riyadh",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Nile Cotton Mills",
+     "domain": "nile-cotton-mills.example",
+     "country": "EG",
+     "industry": "Textiles",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Mostafa",
+       "last_name": "Hassan",
+       "email": "mostafa.hassan@nile-cotton-mills.example",
+       "job_title": "Import Manager",
+       "city": "Cairo",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Mona",
+       "last_name": "Ibrahim",
+       "email": "mona@nile-cotton-mills.example",
+       "job_title": "Purchasing Lead",
+       "city": "Cairo",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Delta Fresh Produce",
+     "domain": "delta-fresh-produce.example",
+     "country": "EG",
+     "industry": "Agriculture",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Mona",
+       "last_name": "Ibrahim",
+       "email": "mona.ibrahim@delta-fresh-produce.example",
+       "job_title": "Head of Operations",
+       "city": "Alexandria",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Pharos Textiles",
+     "domain": "pharos-textiles.example",
+     "country": "EG",
+     "industry": "Textiles",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Tarek",
+       "last_name": "Saleh",
+       "email": "tarek.saleh@pharos-textiles.example",
+       "job_title": "Purchasing Lead",
+       "city": "Cairo",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Cairo Packaging",
+     "domain": "cairo-packaging.example",
+     "country": "EG",
+     "industry": "Agriculture",
+     "office": "ae",
+     "branches": [
+      {
+       "name": "Cairo branch",
+       "country": "EG",
+       "city": "Cairo"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Heba",
+       "last_name": "Fawzy",
+       "email": "heba.fawzy@cairo-packaging.example",
+       "job_title": "Logistics Manager",
+       "city": "Alexandria",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Mostafa",
+       "last_name": "Hassan",
+       "email": "mostafa@cairo-packaging.example",
+       "job_title": "Supply Chain Director",
+       "city": "Alexandria",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Coromandel Auto Components",
+     "domain": "coromandel-auto-components.example",
+     "country": "IN",
+     "industry": "Auto parts",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Priya",
+       "last_name": "Raman",
+       "email": "priya.raman@coromandel-auto-components.example",
+       "job_title": "Procurement Manager",
+       "city": "Chennai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Bharat Chemicals",
+     "domain": "bharat-chemicals.example",
+     "country": "IN",
+     "industry": "Textiles",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Arjun",
+       "last_name": "Mehta",
+       "email": "arjun.mehta@bharat-chemicals.example",
+       "job_title": "Supply Chain Director",
+       "city": "Mumbai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Sahyadri Textiles",
+     "domain": "sahyadri-textiles.example",
+     "country": "IN",
+     "industry": "Chemicals",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Kavya",
+       "last_name": "Iyer",
+       "email": "kavya.iyer@sahyadri-textiles.example",
+       "job_title": "Import Manager",
+       "city": "Ahmedabad",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Rohan",
+       "last_name": "Shah",
+       "email": "rohan@sahyadri-textiles.example",
+       "job_title": "Purchasing Lead",
+       "city": "Ahmedabad",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Indus Pumps",
+     "domain": "indus-pumps.example",
+     "country": "IN",
+     "industry": "Auto parts",
+     "office": "ae",
+     "branches": [
+      {
+       "name": "Mumbai branch",
+       "country": "IN",
+       "city": "Mumbai"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Rohan",
+       "last_name": "Shah",
+       "email": "rohan.shah@indus-pumps.example",
+       "job_title": "Head of Operations",
+       "city": "Chennai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Malabar Spices Export",
+     "domain": "malabar-spices-export.example",
+     "country": "IN",
+     "industry": "Textiles",
+     "office": "ae",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Anita",
+       "last_name": "Nair",
+       "email": "anita.nair@malabar-spices-export.example",
+       "job_title": "Purchasing Lead",
+       "city": "Mumbai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Pearl River Electronics",
+     "domain": "pearl-river-electronics.example",
+     "country": "CN",
+     "industry": "Electronics",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Wei",
+       "last_name": "Zhang",
+       "email": "wei.zhang@pearl-river-electronics.example",
+       "job_title": "Logistics Manager",
+       "city": "Shanghai",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Li",
+       "last_name": "Na",
+       "email": "li@pearl-river-electronics.example",
+       "job_title": "Supply Chain Director",
+       "city": "Shanghai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Ningbo Home Furnishing",
+     "domain": "ningbo-home-furnishing.example",
+     "country": "CN",
+     "industry": "Furniture",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Li",
+       "last_name": "Na",
+       "email": "li.na@ningbo-home-furnishing.example",
+       "job_title": "Procurement Manager",
+       "city": "Ningbo",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Yangtze Lighting",
+     "domain": "yangtze-lighting.example",
+     "country": "CN",
+     "industry": "Electronics",
+     "office": "usa",
+     "branches": [
+      {
+       "name": "Shanghai branch",
+       "country": "CN",
+       "city": "Shanghai"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Chen",
+       "last_name": "Hao",
+       "email": "chen.hao@yangtze-lighting.example",
+       "job_title": "Supply Chain Director",
+       "city": "Shenzhen",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Shenzhen Smart Devices",
+     "domain": "shenzhen-smart-devices.example",
+     "country": "CN",
+     "industry": "Furniture",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Wang",
+       "last_name": "Fang",
+       "email": "wang.fang@shenzhen-smart-devices.example",
+       "job_title": "Import Manager",
+       "city": "Shanghai",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Wei",
+       "last_name": "Zhang",
+       "email": "wei@shenzhen-smart-devices.example",
+       "job_title": "Purchasing Lead",
+       "city": "Shanghai",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Maison Beaulieu",
+     "domain": "maison-beaulieu.example",
+     "country": "FR",
+     "industry": "Wine",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Claire",
+       "last_name": "Martin",
+       "email": "claire.martin@maison-beaulieu.example",
+       "job_title": "Head of Operations",
+       "city": "Paris",
+       "language": "fr",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Cosmétiques Rivage",
+     "domain": "cosmetiques-rivage.example",
+     "country": "FR",
+     "industry": "Cosmetics",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Julien",
+       "last_name": "Bernard",
+       "email": "julien.bernard@cosmetiques-rivage.example",
+       "job_title": "Purchasing Lead",
+       "city": "Lyon",
+       "language": "fr",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Ateliers Durand",
+     "domain": "ateliers-durand.example",
+     "country": "FR",
+     "industry": "Machinery",
+     "office": "fr",
+     "branches": [
+      {
+       "name": "Le Havre branch",
+       "country": "FR",
+       "city": "Le Havre"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Sophie",
+       "last_name": "Lefèvre",
+       "email": "sophie.lefevre@ateliers-durand.example",
+       "job_title": "Logistics Manager",
+       "city": "Marseille",
+       "language": "fr",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Antoine",
+       "last_name": "Moreau",
+       "email": "antoine@ateliers-durand.example",
+       "job_title": "Supply Chain Director",
+       "city": "Marseille",
+       "language": "fr",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Vins du Rhône Export",
+     "domain": "vins-du-rhone-export.example",
+     "country": "FR",
+     "industry": "Wine",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Antoine",
+       "last_name": "Moreau",
+       "email": "antoine.moreau@vins-du-rhone-export.example",
+       "job_title": "Procurement Manager",
+       "city": "Le Havre",
+       "language": "fr",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Normandie Industrie",
+     "domain": "normandie-industrie.example",
+     "country": "FR",
+     "industry": "Cosmetics",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Camille",
+       "last_name": "Laurent",
+       "email": "camille.laurent@normandie-industrie.example",
+       "job_title": "Supply Chain Director",
+       "city": "Paris",
+       "language": "fr",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Cerámicas Levante",
+     "domain": "ceramicas-levante.example",
+     "country": "ES",
+     "industry": "Ceramics",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Lucía",
+       "last_name": "García",
+       "email": "lucia.garcia@ceramicas-levante.example",
+       "job_title": "Import Manager",
+       "city": "Madrid",
+       "language": "es",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Javier",
+       "last_name": "Martínez",
+       "email": "javier@ceramicas-levante.example",
+       "job_title": "Purchasing Lead",
+       "city": "Madrid",
+       "language": "es",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Aceites del Sur",
+     "domain": "aceites-del-sur.example",
+     "country": "ES",
+     "industry": "Food",
+     "office": "es",
+     "branches": [
+      {
+       "name": "Barcelona branch",
+       "country": "ES",
+       "city": "Barcelona"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Javier",
+       "last_name": "Martínez",
+       "email": "javier.martinez@aceites-del-sur.example",
+       "job_title": "Head of Operations",
+       "city": "Valencia",
+       "language": "es",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Motores Ibéricos",
+     "domain": "motores-ibericos.example",
+     "country": "ES",
+     "industry": "Automotive",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Elena",
+       "last_name": "Sánchez",
+       "email": "elena.sanchez@motores-ibericos.example",
+       "job_title": "Purchasing Lead",
+       "city": "Barcelona",
+       "language": "es",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Frutas Valencia",
+     "domain": "frutas-valencia.example",
+     "country": "ES",
+     "industry": "Ceramics",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Pablo",
+       "last_name": "López",
+       "email": "pablo.lopez@frutas-valencia.example",
+       "job_title": "Logistics Manager",
+       "city": "Madrid",
+       "language": "es",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Lucía",
+       "last_name": "García",
+       "email": "lucia@frutas-valencia.example",
+       "job_title": "Supply Chain Director",
+       "city": "Madrid",
+       "language": "es",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Café Serra Alta",
+     "domain": "cafe-serra-alta.example",
+     "country": "BR",
+     "industry": "Coffee",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "João",
+       "last_name": "Silva",
+       "email": "joao.silva@cafe-serra-alta.example",
+       "job_title": "Procurement Manager",
+       "city": "São Paulo",
+       "language": "pt",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Agro Paraná",
+     "domain": "agro-parana.example",
+     "country": "BR",
+     "industry": "Agriculture",
+     "office": "es",
+     "branches": [
+      {
+       "name": "Curitiba branch",
+       "country": "BR",
+       "city": "Curitiba"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Ana",
+       "last_name": "Souza",
+       "email": "ana.souza@agro-parana.example",
+       "job_title": "Supply Chain Director",
+       "city": "Santos",
+       "language": "pt",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Santos Commodities",
+     "domain": "santos-commodities.example",
+     "country": "BR",
+     "industry": "Coffee",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Pedro",
+       "last_name": "Oliveira",
+       "email": "pedro.oliveira@santos-commodities.example",
+       "job_title": "Import Manager",
+       "city": "Curitiba",
+       "language": "pt",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Mariana",
+       "last_name": "Costa",
+       "email": "mariana@santos-commodities.example",
+       "job_title": "Purchasing Lead",
+       "city": "Curitiba",
+       "language": "pt",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Brasil Madeiras",
+     "domain": "brasil-madeiras.example",
+     "country": "BR",
+     "industry": "Agriculture",
+     "office": "es",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Mariana",
+       "last_name": "Costa",
+       "email": "mariana.costa@brasil-madeiras.example",
+       "job_title": "Head of Operations",
+       "city": "São Paulo",
+       "language": "pt",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Lone Star Machinery",
+     "domain": "lone-star-machinery.example",
+     "country": "US",
+     "industry": "Retail",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Emily",
+       "last_name": "Johnson",
+       "email": "emily.johnson@lone-star-machinery.example",
+       "job_title": "Purchasing Lead",
+       "city": "Houston",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Hudson Retail Group",
+     "domain": "hudson-retail-group.example",
+     "country": "US",
+     "industry": "Machinery",
+     "office": "usa",
+     "branches": [
+      {
+       "name": "Los Angeles branch",
+       "country": "US",
+       "city": "Los Angeles"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Michael",
+       "last_name": "Brown",
+       "email": "michael.brown@hudson-retail-group.example",
+       "job_title": "Logistics Manager",
+       "city": "New York",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Sarah",
+       "last_name": "Davis",
+       "email": "sarah@hudson-retail-group.example",
+       "job_title": "Supply Chain Director",
+       "city": "New York",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Pacific Coast Imports",
+     "domain": "pacific-coast-imports.example",
+     "country": "US",
+     "industry": "Energy",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Sarah",
+       "last_name": "Davis",
+       "email": "sarah.davis@pacific-coast-imports.example",
+       "job_title": "Procurement Manager",
+       "city": "Los Angeles",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Gulf Energy Supply",
+     "domain": "gulf-energy-supply.example",
+     "country": "US",
+     "industry": "Retail",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "David",
+       "last_name": "Miller",
+       "email": "david.miller@gulf-energy-supply.example",
+       "job_title": "Supply Chain Director",
+       "city": "Houston",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Liberty Home Goods",
+     "domain": "liberty-home-goods.example",
+     "country": "US",
+     "industry": "Machinery",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Jessica",
+       "last_name": "Wilson",
+       "email": "jessica.wilson@liberty-home-goods.example",
+       "job_title": "Import Manager",
+       "city": "New York",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Emily",
+       "last_name": "Johnson",
+       "email": "emily@liberty-home-goods.example",
+       "job_title": "Purchasing Lead",
+       "city": "New York",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Maple Leaf Timber",
+     "domain": "maple-leaf-timber.example",
+     "country": "CA",
+     "industry": "Forestry",
+     "office": "usa",
+     "branches": [
+      {
+       "name": "Montreal branch",
+       "country": "CA",
+       "city": "Montreal"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Olivia",
+       "last_name": "Tremblay",
+       "email": "olivia.tremblay@maple-leaf-timber.example",
+       "job_title": "Head of Operations",
+       "city": "Toronto",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Laurentian Foods",
+     "domain": "laurentian-foods.example",
+     "country": "CA",
+     "industry": "Food",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Liam",
+       "last_name": "Roy",
+       "email": "liam.roy@laurentian-foods.example",
+       "job_title": "Purchasing Lead",
+       "city": "Montreal",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Pacific Rim Seafood",
+     "domain": "pacific-rim-seafood.example",
+     "country": "CA",
+     "industry": "Forestry",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Emma",
+       "last_name": "Gagnon",
+       "email": "emma.gagnon@pacific-rim-seafood.example",
+       "job_title": "Logistics Manager",
+       "city": "Vancouver",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Noah",
+       "last_name": "Campbell",
+       "email": "noah@pacific-rim-seafood.example",
+       "job_title": "Supply Chain Director",
+       "city": "Vancouver",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Ontario Auto Supply",
+     "domain": "ontario-auto-supply.example",
+     "country": "CA",
+     "industry": "Food",
+     "office": "usa",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Noah",
+       "last_name": "Campbell",
+       "email": "noah.campbell@ontario-auto-supply.example",
+       "job_title": "Procurement Manager",
+       "city": "Toronto",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Ceylon Leaf Exports",
+     "domain": "ceylon-leaf-exports.example",
+     "country": "LK",
+     "industry": "Tea",
+     "office": "lk",
+     "branches": [
+      {
+       "name": "Kandy branch",
+       "country": "LK",
+       "city": "Kandy"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Nimal",
+       "last_name": "Perera",
+       "email": "nimal.perera@ceylon-leaf-exports.example",
+       "job_title": "Supply Chain Director",
+       "city": "Colombo",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Lanka Apparel Works",
+     "domain": "lanka-apparel-works.example",
+     "country": "LK",
+     "industry": "Apparel",
+     "office": "lk",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Dilani",
+       "last_name": "Fernando",
+       "email": "dilani.fernando@lanka-apparel-works.example",
+       "job_title": "Import Manager",
+       "city": "Kandy",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Ruwan",
+       "last_name": "Silva",
+       "email": "ruwan@lanka-apparel-works.example",
+       "job_title": "Purchasing Lead",
+       "city": "Kandy",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Kandy Spice Gardens",
+     "domain": "kandy-spice-gardens.example",
+     "country": "LK",
+     "industry": "Tea",
+     "office": "lk",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Ruwan",
+       "last_name": "Silva",
+       "email": "ruwan.silva@kandy-spice-gardens.example",
+       "job_title": "Head of Operations",
+       "city": "Colombo",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Colombo Rubber Goods",
+     "domain": "colombo-rubber-goods.example",
+     "country": "LK",
+     "industry": "Apparel",
+     "office": "lk",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Ishara",
+       "last_name": "Jayasinghe",
+       "email": "ishara.jayasinghe@colombo-rubber-goods.example",
+       "job_title": "Purchasing Lead",
+       "city": "Kandy",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Hanse Maschinenbau",
+     "domain": "hanse-maschinenbau.example",
+     "country": "DE",
+     "industry": "Machinery",
+     "office": "fr",
+     "branches": [
+      {
+       "name": "Munich branch",
+       "country": "DE",
+       "city": "Munich"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Lukas",
+       "last_name": "Schmidt",
+       "email": "lukas.schmidt@hanse-maschinenbau.example",
+       "job_title": "Logistics Manager",
+       "city": "Hamburg",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Anna",
+       "last_name": "Müller",
+       "email": "anna@hanse-maschinenbau.example",
+       "job_title": "Supply Chain Director",
+       "city": "Hamburg",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Bavaria Präzision",
+     "domain": "bavaria-pr-zision.example",
+     "country": "DE",
+     "industry": "Automotive",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Anna",
+       "last_name": "Müller",
+       "email": "anna.muller@bavaria-pr-zision.example",
+       "job_title": "Procurement Manager",
+       "city": "Munich",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Schwaben Autoteile",
+     "domain": "schwaben-autoteile.example",
+     "country": "DE",
+     "industry": "Chemicals",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Jonas",
+       "last_name": "Weber",
+       "email": "jonas.weber@schwaben-autoteile.example",
+       "job_title": "Supply Chain Director",
+       "city": "Stuttgart",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    },
+    {
+     "name": "Rhein Chemie Handel",
+     "domain": "rhein-chemie-handel.example",
+     "country": "DE",
+     "industry": "Machinery",
+     "office": "fr",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Lea",
+       "last_name": "Fischer",
+       "email": "lea.fischer@rhein-chemie-handel.example",
+       "job_title": "Import Manager",
+       "city": "Hamburg",
+       "language": "en",
+       "network": "WCA"
+      },
+      {
+       "first_name": "Lukas",
+       "last_name": "Schmidt",
+       "email": "lukas@rhein-chemie-handel.example",
+       "job_title": "Purchasing Lead",
+       "city": "Hamburg",
+       "language": "en",
+       "network": "WCA"
+      }
+     ]
+    }
+   ],
+   "templates": {
+    "intro": {
+     "en": [
+      "Shipping to {{company.name}}",
+      "Hello {{contact.first_name|there}},\n\nI'm {{sender.name}} from {{office.name}}. We move sea and air freight for importers like {{company.name}}, with our own teams at origin and destination.\n\nWould a quick quote on your next shipment be useful?\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "fr": [
+      "Vos expéditions pour {{company.name}}",
+      "Bonjour {{contact.first_name|}},\n\nJe suis {{sender.name}}, de {{office.name}}. Nous organisons le fret maritime et aérien pour des importateurs comme {{company.name}}.\n\nUn devis pour votre prochaine expédition vous serait-il utile ?\n\nCordialement,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "es": [
+      "Sus envíos para {{company.name}}",
+      "Hola {{contact.first_name|}},\n\nSoy {{sender.name}}, de {{office.name}}. Gestionamos carga marítima y aérea para importadores como {{company.name}}.\n\n¿Le sería útil una cotización para su próximo envío?\n\nSaludos cordiales,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "follow_up_1": {
+     "en": [
+      "Following up",
+      "Hello {{contact.first_name|there}},\n\nJust following up on my note last week. If you have a shipment coming up, send me the route and volume and I'll come back with rates the same day.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "fr": [
+      "Suite à mon message",
+      "Bonjour {{contact.first_name|}},\n\nJe me permets de revenir vers vous. Si une expédition se prépare, envoyez-moi le trajet et le volume : je vous réponds le jour même.\n\nCordialement,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "es": [
+      "Seguimiento",
+      "Hola {{contact.first_name|}},\n\nLe escribo para dar seguimiento a mi mensaje. Si tiene un envío próximo, envíeme la ruta y el volumen y le respondo el mismo día.\n\nSaludos cordiales,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "reply_rate_query": {
+     "en": [
+      "Re: your rate request",
+      "Hello {{contact.first_name|there}},\n\nThank you for the details. Our pricing team is preparing your quote and will send it shortly.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "fr": [
+      "Re : votre demande de tarif",
+      "Bonjour {{contact.first_name|}},\n\nMerci pour ces informations. Notre équipe tarifs prépare votre devis et vous l'envoie rapidement.\n\nCordialement,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "es": [
+      "Re: su solicitud de tarifa",
+      "Hola {{contact.first_name|}},\n\nGracias por los detalles. Nuestro equipo de tarifas está preparando su cotización y se la enviará en breve.\n\nSaludos cordiales,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "reply_interested": {
+     "en": [
+      "Re: next steps",
+      "Hello {{contact.first_name|there}},\n\nGreat to hear from you. Could you share your main routes and typical volumes? I'll put together options for you.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "fr": [
+      "Re : prochaines étapes",
+      "Bonjour {{contact.first_name|}},\n\nRavi de votre retour. Pourriez-vous me préciser vos principaux trajets et volumes ? Je vous prépare des options.\n\nCordialement,\n{{sender.name}}\n{{office.name}}"
+     ],
+     "es": [
+      "Re: próximos pasos",
+      "Hola {{contact.first_name|}},\n\nMe alegra su respuesta. ¿Podría indicarme sus rutas principales y volúmenes habituales? Le preparo opciones.\n\nSaludos cordiales,\n{{sender.name}}\n{{office.name}}"
+     ]
+    }
+   },
+   "workflows": [
+    {
+     "name": "office-intro-sequence",
+     "description": "Tag a contact 'intro' to send the intro and, without a reply, one follow-up after 5 business days. Any reply stops it.",
+     "graph": {
+      "trigger": {
+       "id": "trigger",
+       "type": "trigger_tag_added",
+       "config": {
+        "tag": "intro"
+       }
+      },
+      "nodes": [
+       {
+        "id": "send_intro",
+        "type": "send_email",
+        "config": {
+         "office_id": "@office:ae",
+         "template_key": "intro"
+        }
+       },
+       {
+        "id": "wait_5",
+        "type": "wait_business_days",
+        "config": {
+         "days": 5
+        }
+       },
+       {
+        "id": "send_follow_up",
+        "type": "send_email",
+        "config": {
+         "office_id": "@office:ae",
+         "template_key": "follow_up_1"
+        }
+       },
+       {
+        "id": "done",
+        "type": "stop",
+        "config": {}
+       }
+      ],
+      "edges": [
+       {
+        "source": "trigger",
+        "target": "send_intro"
+       },
+       {
+        "source": "send_intro",
+        "target": "wait_5"
+       },
+       {
+        "source": "wait_5",
+        "target": "send_follow_up"
+       },
+       {
+        "source": "send_follow_up",
+        "target": "done"
+       }
+      ]
+     }
+    },
+    {
+     "name": "rate-query-handover",
+     "description": "When a reply asks for rates or services: extract the shipment, tell the office owner, tag the contact and hand a lead to pricing (high priority from 5 containers).",
+     "graph": {
+      "trigger": {
+       "id": "trigger",
+       "type": "trigger_reply_classified",
+       "config": {
+        "buckets": [
+         "rate_query",
+         "service_query"
+        ]
+       }
+      },
+      "nodes": [
+       {
+        "id": "extract",
+        "type": "ai_extract_shipment_details",
+        "config": {}
+       },
+       {
+        "id": "tell_owner",
+        "type": "notify_office_owner",
+        "config": {
+         "message": "Rate request from {{contact.full_name}}: {{reply.summary}}"
+        }
+       },
+       {
+        "id": "tag",
+        "type": "add_tag",
+        "config": {
+         "tag": "rate-query"
+        }
+       },
+       {
+        "id": "big",
+        "type": "if_condition",
+        "config": {
+         "condition": {
+          "field": "lead.container_quantity",
+          "op": "gte",
+          "value": 5
+         }
+        }
+       },
+       {
+        "id": "lead_high",
+        "type": "create_pricing_lead",
+        "config": {
+         "priority": "high"
+        }
+       },
+       {
+        "id": "lead_normal",
+        "type": "create_pricing_lead",
+        "config": {
+         "priority": "normal"
+        }
+       }
+      ],
+      "edges": [
+       {
+        "source": "trigger",
+        "target": "extract"
+       },
+       {
+        "source": "extract",
+        "target": "tell_owner"
+       },
+       {
+        "source": "tell_owner",
+        "target": "tag"
+       },
+       {
+        "source": "tag",
+        "target": "big"
+       },
+       {
+        "source": "big",
+        "target": "lead_high",
+        "handle": "true"
+       },
+       {
+        "source": "big",
+        "target": "lead_normal",
+        "handle": "false"
+       }
+      ]
+     }
+    }
+   ],
+   "countries": [
+    {
+     "country": "GB",
+     "name": "United Kingdom",
+     "language": "en",
+     "to_country_phrase": "to the UK",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "IE",
+     "name": "Ireland",
+     "language": "en",
+     "to_country_phrase": "to Ireland",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "IL",
+     "name": "Israel",
+     "language": "en",
+     "to_country_phrase": "to Israel",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "IN",
+     "name": "India",
+     "language": "en",
+     "to_country_phrase": "to India",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "BD",
+     "name": "Bangladesh",
+     "language": "en",
+     "to_country_phrase": "to Bangladesh",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "LK",
+     "name": "Sri Lanka",
+     "language": "en",
+     "to_country_phrase": "to Sri Lanka",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "PK",
+     "name": "Pakistan",
+     "language": "en",
+     "to_country_phrase": "to Pakistan",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "PH",
+     "name": "Philippines",
+     "language": "en",
+     "to_country_phrase": "to the Philippines",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "MY",
+     "name": "Malaysia",
+     "language": "en",
+     "to_country_phrase": "to Malaysia",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "ZA",
+     "name": "South Africa",
+     "language": "en",
+     "to_country_phrase": "to South Africa",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "NG",
+     "name": "Nigeria",
+     "language": "en",
+     "to_country_phrase": "to Nigeria",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "KE",
+     "name": "Kenya",
+     "language": "en",
+     "to_country_phrase": "to Kenya",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "ET",
+     "name": "Ethiopia",
+     "language": "en",
+     "to_country_phrase": "to Ethiopia",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "TZ",
+     "name": "Tanzania",
+     "language": "en",
+     "to_country_phrase": "to Tanzania",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "GH",
+     "name": "Ghana",
+     "language": "en",
+     "to_country_phrase": "to Ghana",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "US",
+     "name": "United States",
+     "language": "en-na",
+     "to_country_phrase": "to the USA",
+     "allow_language_fallback": false
+    },
+    {
+     "country": "CA",
+     "name": "Canada",
+     "language": "en-na",
+     "to_country_phrase": "to Canada",
+     "allow_language_fallback": false
+    },
+    {
+     "country": "FR",
+     "name": "France",
+     "language": "fr",
+     "to_country_phrase": "vers la France",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "BE",
+     "name": "Belgium",
+     "language": "fr",
+     "to_country_phrase": "vers la Belgique",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "MA",
+     "name": "Morocco",
+     "language": "fr",
+     "to_country_phrase": "vers le Maroc",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "DZ",
+     "name": "Algeria",
+     "language": "fr",
+     "to_country_phrase": "vers l'Algérie",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "TN",
+     "name": "Tunisia",
+     "language": "fr",
+     "to_country_phrase": "vers la Tunisie",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "DE",
+     "name": "Germany",
+     "language": "de",
+     "to_country_phrase": "nach Deutschland",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "CH",
+     "name": "Switzerland",
+     "language": "de",
+     "to_country_phrase": "in die Schweiz",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "NL",
+     "name": "Netherlands",
+     "language": "nl",
+     "to_country_phrase": "naar Nederland",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "IT",
+     "name": "Italy",
+     "language": "it",
+     "to_country_phrase": "verso l'Italia",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "ES",
+     "name": "Spain",
+     "language": "es",
+     "to_country_phrase": "a España",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "MX",
+     "name": "Mexico",
+     "language": "es",
+     "to_country_phrase": "a México",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "AR",
+     "name": "Argentina",
+     "language": "es",
+     "to_country_phrase": "a Argentina",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "CL",
+     "name": "Chile",
+     "language": "es",
+     "to_country_phrase": "a Chile",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "PE",
+     "name": "Peru",
+     "language": "es",
+     "to_country_phrase": "a Perú",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "EC",
+     "name": "Ecuador",
+     "language": "es",
+     "to_country_phrase": "a Ecuador",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "VE",
+     "name": "Venezuela",
+     "language": "es",
+     "to_country_phrase": "a Venezuela",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "BR",
+     "name": "Brazil",
+     "language": "pt-br",
+     "to_country_phrase": "para o Brasil",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "PT",
+     "name": "Portugal",
+     "language": "pt-pt",
+     "to_country_phrase": "para Portugal",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "AO",
+     "name": "Angola",
+     "language": "pt-pt",
+     "to_country_phrase": "para Angola",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "PL",
+     "name": "Poland",
+     "language": "pl",
+     "to_country_phrase": "do Polski",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "TR",
+     "name": "Turkey",
+     "language": "tr",
+     "to_country_phrase": "Türkiye'ye",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "JO",
+     "name": "Jordan",
+     "language": "ar",
+     "to_country_phrase": "إلى الأردن",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "SA",
+     "name": "Saudi Arabia",
+     "language": "ar",
+     "to_country_phrase": "إلى السعودية",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "QA",
+     "name": "Qatar",
+     "language": "ar",
+     "to_country_phrase": "إلى قطر",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "KW",
+     "name": "Kuwait",
+     "language": "ar",
+     "to_country_phrase": "إلى الكويت",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "AE",
+     "name": "United Arab Emirates",
+     "language": "ar",
+     "to_country_phrase": "إلى الإمارات",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "BH",
+     "name": "Bahrain",
+     "language": "ar",
+     "to_country_phrase": "إلى البحرين",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "OM",
+     "name": "Oman",
+     "language": "ar",
+     "to_country_phrase": "إلى عُمان",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "EG",
+     "name": "Egypt",
+     "language": "ar",
+     "to_country_phrase": "إلى مصر",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "CN",
+     "name": "China",
+     "language": "zh-hans",
+     "to_country_phrase": "中国",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "TW",
+     "name": "Taiwan",
+     "language": "zh-hant",
+     "to_country_phrase": "台灣",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "HK",
+     "name": "Hong Kong",
+     "language": "zh-hant",
+     "to_country_phrase": "香港",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "KR",
+     "name": "South Korea",
+     "language": "ko",
+     "to_country_phrase": "한국",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "VN",
+     "name": "Vietnam",
+     "language": "vi",
+     "to_country_phrase": "đến Việt Nam",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "TH",
+     "name": "Thailand",
+     "language": "th",
+     "to_country_phrase": "มายังประเทศไทย",
+     "allow_language_fallback": true
+    },
+    {
+     "country": "ID",
+     "name": "Indonesia",
+     "language": "id",
+     "to_country_phrase": "ke Indonesia",
+     "allow_language_fallback": true
+    }
+   ],
+   "branding": {
+    "company_name": "Skyfer Logistic",
+    "tagline": "Beyond Your Destination",
+    "offices_strip": "Canada | USA | France | Spain | UAE | India | Sri Lanka",
+    "address": "380 Ambassador Drive, Mississauga, ON L5T 2J3",
+    "phone": "+1 905-677-5000",
+    "website": "www.skyferlogistic.com",
+    "primary_color": "#1f3f8f",
+    "accent_color": "#6cbf4a",
+    "lane_origin_countries": ["CA", "US"]
+   },
+   "sample_scripts": [
+    {
+     "service_line": "air",
+     "name": "USA-Canada air to country",
+     "language": "en",
+     "subject": "Air freight from the USA or Canada {to_country}",
+     "body": "Hi {first_name|there},\n\nHope all is well.\n\nJust reaching out to see if you have any upcoming air freight enquiries from the USA or Canada {to_country}.\n\nWith our strong airline partnerships and sharp rates, we'd be pleased to provide our best quote for any opportunities you can share to win business.\n\n{banner}\n\nWe look forward to quoting your next shipment.\n\nBest regards,\n\n{signature}\n\nYou're receiving this email as a fellow {network|freight network} member.\n\nPrefer not to receive these emails? {unsubscribe_link|Unsubscribe here}."
+    },
+    {
+     "service_line": "ocean",
+     "name": "USA-Canada ocean to country",
+     "language": "en",
+     "subject": "Ocean freight from the USA or Canada {to_country}",
+     "body": "Hi {first_name|there},\n\nHope all is well.\n\nDo you have any upcoming FCL or LCL shipments from the USA or Canada {to_country}? Our weekly sailings and carrier contracts let us offer very competitive ocean rates.\n\n{banner}\n\nSend us the details and we will come back with a quote the same day.\n\nBest regards,\n\n{signature}\n\nYou're receiving this email as a fellow {network|freight network} member.\n\nPrefer not to receive these emails? {unsubscribe_link|Unsubscribe here}."
+    }
+   ]
+  },
+  {
+   "name": "Demo Forwarder",
+   "slug": "demo-forwarder",
+   "offices": [
+    {
+     "key": "nl",
+     "name": "Rotterdam",
+     "country": "NL",
+     "timezone": "Europe/Amsterdam",
+     "default_language": "en",
+     "owner_name": "Daan de Vries",
+     "owner_email": "owner@demo-forwarder.example",
+     "signature": "Demo Forwarder Rotterdam"
+    }
+   ],
+   "senders": [
+    {
+     "office": "nl",
+     "display_name": "Sanne Jansen",
+     "email": "sanne@demo-forwarder.example"
+    }
+   ],
+   "companies": [
+    {
+     "name": "Gulf Importers",
+     "domain": "gulf-importers.demo.example",
+     "country": "AE",
+     "industry": "Trading",
+     "office": "nl",
+     "branches": [
+      {
+       "name": "Abu Dhabi branch",
+       "country": "AE",
+       "city": "Abu Dhabi"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Ahmed",
+       "last_name": "Khan",
+       "email": "ahmed.khan@gulf-importers.demo.example",
+       "job_title": "Logistics Manager",
+       "city": "Dubai",
+       "language": "en"
+      },
+      {
+       "first_name": "Fatima",
+       "last_name": "Al Mansoori",
+       "email": "fatima@gulf-importers.demo.example",
+       "job_title": "Supply Chain Director",
+       "city": "Dubai",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Desert Rose Trading",
+     "domain": "desert-rose-trading.demo.example",
+     "country": "AE",
+     "industry": "Electronics",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Fatima",
+       "last_name": "Al Mansoori",
+       "email": "fatima.al-mansoori@desert-rose-trading.demo.example",
+       "job_title": "Procurement Manager",
+       "city": "Abu Dhabi",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Emirates Retail Supply",
+     "domain": "emirates-retail-supply.demo.example",
+     "country": "AE",
+     "industry": "FMCG",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Omar",
+       "last_name": "Haddad",
+       "email": "omar.haddad@emirates-retail-supply.demo.example",
+       "job_title": "Supply Chain Director",
+       "city": "Sharjah",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Palm Coast Foods",
+     "domain": "palm-coast-foods.demo.example",
+     "country": "AE",
+     "industry": "Trading",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Layla",
+       "last_name": "Nasser",
+       "email": "layla.nasser@palm-coast-foods.demo.example",
+       "job_title": "Import Manager",
+       "city": "Dubai",
+       "language": "en"
+      },
+      {
+       "first_name": "Yousef",
+       "last_name": "Karim",
+       "email": "yousef@palm-coast-foods.demo.example",
+       "job_title": "Purchasing Lead",
+       "city": "Dubai",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Falcon Electronics",
+     "domain": "falcon-electronics.demo.example",
+     "country": "AE",
+     "industry": "Electronics",
+     "office": "nl",
+     "branches": [
+      {
+       "name": "Sharjah branch",
+       "country": "AE",
+       "city": "Sharjah"
+      }
+     ],
+     "contacts": [
+      {
+       "first_name": "Yousef",
+       "last_name": "Karim",
+       "email": "yousef.karim@falcon-electronics.demo.example",
+       "job_title": "Head of Operations",
+       "city": "Abu Dhabi",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Red Sea Builders",
+     "domain": "red-sea-builders.demo.example",
+     "country": "SA",
+     "industry": "Construction",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Khalid",
+       "last_name": "Al Otaibi",
+       "email": "khalid.al-otaibi@red-sea-builders.demo.example",
+       "job_title": "Purchasing Lead",
+       "city": "Riyadh",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Najd Retail Group",
+     "domain": "najd-retail-group.demo.example",
+     "country": "SA",
+     "industry": "Retail",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Noura",
+       "last_name": "Al Harbi",
+       "email": "noura.al-harbi@najd-retail-group.demo.example",
+       "job_title": "Logistics Manager",
+       "city": "Jeddah",
+       "language": "en"
+      },
+      {
+       "first_name": "Faisal",
+       "last_name": "Qahtani",
+       "email": "faisal@najd-retail-group.demo.example",
+       "job_title": "Supply Chain Director",
+       "city": "Jeddah",
+       "language": "en"
+      }
+     ]
+    },
+    {
+     "name": "Arabian Polymers",
+     "domain": "arabian-polymers.demo.example",
+     "country": "SA",
+     "industry": "Petrochemicals",
+     "office": "nl",
+     "branches": [],
+     "contacts": [
+      {
+       "first_name": "Faisal",
+       "last_name": "Qahtani",
+       "email": "faisal.qahtani@arabian-polymers.demo.example",
+       "job_title": "Procurement Manager",
+       "city": "Dammam",
+       "language": "en"
+      }
+     ]
+    }
+   ],
+   "templates": {
+    "intro": {
+     "en": [
+      "Shipping to {{company.name}}",
+      "Hello {{contact.first_name|there}},\n\nI'm {{sender.name}} from {{office.name}}. We move sea and air freight for importers like {{company.name}}, with our own teams at origin and destination.\n\nWould a quick quote on your next shipment be useful?\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "follow_up_1": {
+     "en": [
+      "Following up",
+      "Hello {{contact.first_name|there}},\n\nJust following up on my note last week. If you have a shipment coming up, send me the route and volume and I'll come back with rates the same day.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "reply_rate_query": {
+     "en": [
+      "Re: your rate request",
+      "Hello {{contact.first_name|there}},\n\nThank you for the details. Our pricing team is preparing your quote and will send it shortly.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ]
+    },
+    "reply_interested": {
+     "en": [
+      "Re: next steps",
+      "Hello {{contact.first_name|there}},\n\nGreat to hear from you. Could you share your main routes and typical volumes? I'll put together options for you.\n\nBest regards,\n{{sender.name}}\n{{office.name}}"
+     ]
+    }
+   },
+   "workflows": [
+    {
+     "name": "office-intro-sequence",
+     "description": "Tag a contact 'intro' to send the intro and, without a reply, one follow-up after 5 business days. Any reply stops it.",
+     "graph": {
+      "trigger": {
+       "id": "trigger",
+       "type": "trigger_tag_added",
+       "config": {
+        "tag": "intro"
+       }
+      },
+      "nodes": [
+       {
+        "id": "send_intro",
+        "type": "send_email",
+        "config": {
+         "office_id": "@office:nl",
+         "template_key": "intro"
+        }
+       },
+       {
+        "id": "wait_5",
+        "type": "wait_business_days",
+        "config": {
+         "days": 5
+        }
+       },
+       {
+        "id": "send_follow_up",
+        "type": "send_email",
+        "config": {
+         "office_id": "@office:nl",
+         "template_key": "follow_up_1"
+        }
+       },
+       {
+        "id": "done",
+        "type": "stop",
+        "config": {}
+       }
+      ],
+      "edges": [
+       {
+        "source": "trigger",
+        "target": "send_intro"
+       },
+       {
+        "source": "send_intro",
+        "target": "wait_5"
+       },
+       {
+        "source": "wait_5",
+        "target": "send_follow_up"
+       },
+       {
+        "source": "send_follow_up",
+        "target": "done"
+       }
+      ]
+     }
+    },
+    {
+     "name": "rate-query-handover",
+     "description": "When a reply asks for rates or services: extract the shipment, tell the office owner, tag the contact and hand a lead to pricing (high priority from 5 containers).",
+     "graph": {
+      "trigger": {
+       "id": "trigger",
+       "type": "trigger_reply_classified",
+       "config": {
+        "buckets": [
+         "rate_query",
+         "service_query"
+        ]
+       }
+      },
+      "nodes": [
+       {
+        "id": "extract",
+        "type": "ai_extract_shipment_details",
+        "config": {}
+       },
+       {
+        "id": "tell_owner",
+        "type": "notify_office_owner",
+        "config": {
+         "message": "Rate request from {{contact.full_name}}: {{reply.summary}}"
+        }
+       },
+       {
+        "id": "tag",
+        "type": "add_tag",
+        "config": {
+         "tag": "rate-query"
+        }
+       },
+       {
+        "id": "big",
+        "type": "if_condition",
+        "config": {
+         "condition": {
+          "field": "lead.container_quantity",
+          "op": "gte",
+          "value": 5
+         }
+        }
+       },
+       {
+        "id": "lead_high",
+        "type": "create_pricing_lead",
+        "config": {
+         "priority": "high"
+        }
+       },
+       {
+        "id": "lead_normal",
+        "type": "create_pricing_lead",
+        "config": {
+         "priority": "normal"
+        }
+       }
+      ],
+      "edges": [
+       {
+        "source": "trigger",
+        "target": "extract"
+       },
+       {
+        "source": "extract",
+        "target": "tell_owner"
+       },
+       {
+        "source": "tell_owner",
+        "target": "tag"
+       },
+       {
+        "source": "tag",
+        "target": "big"
+       },
+       {
+        "source": "big",
+        "target": "lead_high",
+        "handle": "true"
+       },
+       {
+        "source": "big",
+        "target": "lead_normal",
+        "handle": "false"
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

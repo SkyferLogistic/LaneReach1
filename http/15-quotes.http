@@ -1,0 +1,68 @@
+# Quotes: every freight line, charge lines, sent in the customer's thread, accepted or rejected.
+
+@token = PASTE-A-PRICING-DEV-TOKEN
+@dealId = PASTE-A-DEAL-ID
+@quoteId = PASTE-A-QUOTE-ID
+
+### Service lines with their modes and charge presets, incoterms, units, charge types
+GET {{baseUrl}}/crm/quotes/catalog
+Authorization: Bearer {{token}}
+
+### A draft for a deal (service line, mode, lane and incoterm come from the deal)
+POST {{baseUrl}}/crm/quotes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: quote-create-1
+
+{
+  "deal_id": "{{dealId}}",
+  "transit_days": 3,
+  "lines": [
+    {"charge_type": "freight", "description": "Road freight", "quantity": "2", "unit": "truck", "unit_price": "1450.00"},
+    {"charge_type": "surcharge", "description": "Fuel surcharge", "quantity": "2", "unit": "truck", "unit_price": "185.56"},
+    {"charge_type": "other", "description": "Tolls", "quantity": "1", "unit": "shipment", "unit_price": "65.00"}
+  ]
+}
+
+### All quotes, a status, or sent ones expiring in the next 3 days
+GET {{baseUrl}}/crm/quotes?expiring_within_days=3
+Authorization: Bearer {{token}}
+
+### Edit a draft (409 once sent: duplicate it instead)
+PUT {{baseUrl}}/crm/quotes/{{quoteId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"notes": "Rates subject to equipment availability; excludes duties and taxes."}
+
+### The printable quotation (save as PDF from the browser)
+GET {{baseUrl}}/crm/quotes/{{quoteId}}/document
+Authorization: Bearer {{token}}
+
+### Send in the contact's thread from their agent (dry run in dev: see the outbox); the deal moves to "Quoted"
+POST {{baseUrl}}/crm/quotes/{{quoteId}}/send
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: quote-send-1
+
+{"intro": "Thank you for your request, please find our offer below."}
+
+### The customer's answer (accepted sets the deal value when it has none)
+POST {{baseUrl}}/crm/quotes/{{quoteId}}/decision
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"accepted": true, "note": "Booked for next week"}
+
+### A new draft from an existing quote (re-quote after changes)
+POST {{baseUrl}}/crm/quotes/{{quoteId}}/duplicate
+Authorization: Bearer {{token}}
+Idempotency-Key: quote-duplicate-1
+
+### Which service lines the company sells (admins change it with PUT)
+GET {{baseUrl}}/settings/services
+Authorization: Bearer {{token}}
+
+### Business by service line in the CRM summary
+GET {{baseUrl}}/crm/summary?days=30
+Authorization: Bearer {{token}}

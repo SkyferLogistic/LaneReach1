@@ -1,0 +1,46 @@
+{
+  "name": "lanereach-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "LaneReach console: workflows, contacts, replies, review queue and leads.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "world-dots": "node scripts/world-dots.mjs",
+    "api-types": "openapi-typescript openapi.json --default-non-nullable false -o src/api/schema.d.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@tanstack/react-query": "^5.104.0",
+    "@xyflow/react": "^12.12.0",
+    "country-flag-emoji-polyfill": "^0.1.10",
+    "d3-geo": "^3.1.1",
+    "i18n-iso-countries": "^7.14.0",
+    "openapi-fetch": "^0.17.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@types/d3-geo": "^3.1.1",
+    "@types/node": "^24.19.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-specification": "^1.0.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.1",
+    "openapi-typescript": "^7.13.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}

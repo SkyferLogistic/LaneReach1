@@ -1,0 +1,96 @@
+# Local stack: postgres (pgvector) + redis + one-shot migrate + api + worker + beat + web.
+# Host ports are deliberately unusual so LaneReach can run next to other projects;
+# override them with LANEREACH_*_PORT in .env.
+
+x-app: &app
+  volumes:
+    - documents-data:/data/documents
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  image: lanereach:local
+  env_file:
+    - path: .env
+      required: false
+  environment: &app-env
+    DATABASE_URL: postgresql+asyncpg://lanereach_app:${LANEREACH_APP_DB_PASSWORD:-lanereach_app}@postgres:5432/lanereach
+    DATABASE_OWNER_URL: postgresql+asyncpg://lanereach_owner:${LANEREACH_OWNER_DB_PASSWORD:-lanereach_owner}@postgres:5432/lanereach
+    REDIS_URL: redis://redis:6379/0
+    CELERY_BROKER_URL: redis://redis:6379/1
+    LOCAL_DOCUMENTS_PATH: /data/documents
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: lanereach
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${LANEREACH_ADMIN_DB_PASSWORD:-postgres}
+    ports:
+      - "127.0.0.1:${LANEREACH_POSTGRES_PORT:-15432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lanereach"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:${LANEREACH_REDIS_PORT:-16379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # Creates the owner/app roles (needs the superuser) and runs Alembic as the owner.
+  migrate:
+    <<: *app
+    environment:
+      <<: *app-env
+      DATABASE_ADMIN_URL: postgresql://postgres:${LANEREACH_ADMIN_DB_PASSWORD:-postgres}@postgres:5432/lanereach
+    command: ["sh", "-c", "lanereach-admin bootstrap-db && lanereach-admin migrate"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    <<: *app
+    ports:
+      - "127.0.0.1:${LANEREACH_API_PORT:-8080}:8000"
+
+  worker:
+    <<: *app
+    command: ["celery", "-A", "lanereach.workers.celery_app", "worker", "--loglevel=INFO"]
+    healthcheck:
+      disable: true
+
+  beat:
+    <<: *app
+    command: ["celery", "-A", "lanereach.workers.celery_app", "beat", "--loglevel=INFO", "--schedule=/tmp/celerybeat-schedule"]
+    healthcheck:
+      disable: true
+
+  web:
+    build:
+      context: ./web
+    image: lanereach-web:local
+    ports:
+      - "127.0.0.1:${LANEREACH_WEB_PORT:-8081}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  # Local scripts library (development stand-in for SharePoint).
+  documents-data:

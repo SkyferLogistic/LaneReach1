@@ -1,0 +1,51 @@
+# Campaigns: results, schedules, open/click tracking, mailbox health and the audit log.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@workflowId = PASTE-A-WORKFLOW-ID
+
+### Campaign results: funnel, per-step counts with branches, top links
+GET {{baseUrl}}/automation/workflows/{{workflowId}}/stats
+Authorization: Bearer {{token}}
+
+### Schedule: only from 1 Oct, Monday to Thursday (recipient local days), until 30 Nov
+PUT {{baseUrl}}/automation/workflows/{{workflowId}}/schedule
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "start_date": "2026-10-01",
+  "end_date": "2026-11-30",
+  "weekdays": [1, 2, 3, 4]
+}
+
+### Clear the schedule (send whenever the guardrails allow)
+PUT {{baseUrl}}/automation/workflows/{{workflowId}}/schedule
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+null
+
+### Open and click tracking (HTML emails only)
+PATCH {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "track_opens": true,
+  "track_clicks": true
+}
+
+### Mailbox health of every agent (worst first)
+GET {{baseUrl}}/senders/health
+Authorization: Bearer {{token}}
+
+### Audit log (admins): everything, or one area by action prefix
+GET {{baseUrl}}/audit-events?limit=50
+Authorization: Bearer {{token}}
+
+### Only schedule changes
+GET {{baseUrl}}/audit-events?action=set_workflow_schedule
+Authorization: Bearer {{token}}
+
+# The pixel (/t/o/{token}) and tracked links (/t/c/{token}) are public: they are put into
+# emails at send time and carry a signed token. Try one from an outbox email's HTML.

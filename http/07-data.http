@@ -1,0 +1,263 @@
+# Reference data: offices, senders, companies, contacts, templates, suppressions, calendars,
+# leads, notifications, outbox and sending settings. Creation examples are in 04-engine.http.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@officeId = PASTE-AN-OFFICE-ID
+@senderId = PASTE-A-SENDER-ID
+@companyId = PASTE-A-COMPANY-ID
+@contactId = PASTE-A-CONTACT-ID
+@templateId = PASTE-A-TEMPLATE-ID
+@leadId = PASTE-A-LEAD-ID
+
+### Offices
+GET {{baseUrl}}/offices
+Authorization: Bearer {{token}}
+
+### One office
+GET {{baseUrl}}/offices/{{officeId}}
+Authorization: Bearer {{token}}
+
+### Pause one office's sending (its emails are deferred until resumed)
+PATCH {{baseUrl}}/offices/{{officeId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"sending_paused": true, "signature": "Forwarder UAE | Dubai"}
+
+### Senders of an office
+GET {{baseUrl}}/senders?office_id={{officeId}}
+Authorization: Bearer {{token}}
+
+### Change a mailbox's daily cap / clear a "blocked" flag
+PATCH {{baseUrl}}/senders/{{senderId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"daily_cap": 40, "clear_flag": true}
+
+### Companies (search by name or domain)
+GET {{baseUrl}}/companies?q=gulf
+Authorization: Bearer {{token}}
+
+### One company with branches
+GET {{baseUrl}}/companies/{{companyId}}
+Authorization: Bearer {{token}}
+
+### Freeze a company (every office stops emailing all its branches)
+PATCH {{baseUrl}}/companies/{{companyId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"frozen": true, "frozen_reason": "Existing customer of our Spain office"}
+
+### Add a branch
+POST {{baseUrl}}/companies/{{companyId}}/branches
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: branch-riyadh-1
+
+{"name": "Riyadh branch", "country": "SA", "city": "Riyadh"}
+
+### Contacts (filter by text, tag, company, stage)
+GET {{baseUrl}}/contacts?tag=intro&stage=new
+Authorization: Bearer {{token}}
+
+### One contact
+GET {{baseUrl}}/contacts/{{contactId}}
+Authorization: Bearer {{token}}
+
+### Update a contact
+PATCH {{baseUrl}}/contacts/{{contactId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"job_title": "Head of Logistics", "timezone": "Asia/Dubai"}
+
+### Remove a tag
+DELETE {{baseUrl}}/contacts/{{contactId}}/tags/intro
+Authorization: Bearer {{token}}
+
+### The contact's email history (sent and received)
+GET {{baseUrl}}/contacts/{{contactId}}/messages
+Authorization: Bearer {{token}}
+
+### Templates (optionally one key, all languages)
+GET {{baseUrl}}/templates?key=intro
+Authorization: Bearer {{token}}
+
+### One template
+GET {{baseUrl}}/templates/{{templateId}}
+Authorization: Bearer {{token}}
+
+### Edit a template
+PUT {{baseUrl}}/templates/{{templateId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"subject": "Shipping to {{company.name}}", "body": "Hello {{contact.first_name|there}},\n\n{{sender.name}}\n{{office.name}}"}
+
+### Delete a template version
+DELETE {{baseUrl}}/templates/{{templateId}}
+Authorization: Bearer {{token}}
+
+### Suppressions
+# @name suppressions
+GET {{baseUrl}}/suppressions
+Authorization: Bearer {{token}}
+
+### Suppress an address for 30 days
+POST {{baseUrl}}/suppressions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: suppress-1
+
+{"email": "someone@example.com", "reason": "manual", "note": "Asked to pause until next month", "expires_at": "2026-10-29T00:00:00Z"}
+
+### Lift a suppression
+DELETE {{baseUrl}}/suppressions/{{suppressions.response.body.items[0].id}}
+Authorization: Bearer {{token}}
+
+### Country calendars (built-in defaults plus tenant overrides)
+GET {{baseUrl}}/country-calendars
+Authorization: Bearer {{token}}
+
+### Override a country's calendar (ISO weekdays: 1 = Monday ... 7 = Sunday)
+PUT {{baseUrl}}/country-calendars/AE
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"timezone": "Asia/Dubai", "weekend_days": [6, 7], "extra_holidays": ["2026-12-02", "2026-12-03"], "extra_workdays": []}
+
+### Leads for pricing
+GET {{baseUrl}}/leads?status=new
+Authorization: Bearer {{token}}
+
+### One lead
+GET {{baseUrl}}/leads/{{leadId}}
+Authorization: Bearer {{token}}
+
+### Move a lead along
+PATCH {{baseUrl}}/leads/{{leadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"status": "quoting", "priority": "high"}
+
+### Notifications (owner, pricing, Teams)
+# @name notifications
+GET {{baseUrl}}/notifications?unread=true
+Authorization: Bearer {{token}}
+
+### Mark one read
+POST {{baseUrl}}/notifications/{{notifications.response.body.items[0].id}}/read
+Authorization: Bearer {{token}}
+
+### Outbox (dev/staging): every email the dry-run provider "sent"
+# @name outbox
+GET {{baseUrl}}/outbox?contact_id={{contactId}}
+Authorization: Bearer {{token}}
+
+### One outbox email with headers (Message-ID, In-Reply-To, List-Unsubscribe)
+GET {{baseUrl}}/outbox/{{outbox.response.body.items[0].id}}
+Authorization: Bearer {{token}}
+
+### Sending settings (kill switch and window)
+GET {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+
+### Kill switch: pause every email of the tenant
+PATCH {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"sending_paused": true}
+
+### Resume, and change the window (recipient's local time)
+PATCH {{baseUrl}}/settings/sending
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"sending_paused": false, "sending_window_start": "09:00", "sending_window_end": "11:30"}
+
+### Unsubscribe confirmation page (public; the token comes from an email's List-Unsubscribe
+### header). Opening it never unsubscribes: link scanners open links.
+GET {{baseUrl}}/unsubscribe/PASTE-A-TOKEN
+
+### RFC 8058 one-click POST (what mail clients send)
+POST {{baseUrl}}/unsubscribe/PASTE-A-TOKEN
+Content-Type: application/x-www-form-urlencoded
+
+List-Unsubscribe=One-Click
+
+### Dashboard numbers (7, 30 or 90 days)
+GET {{baseUrl}}/dashboard/stats?days=30
+Authorization: Bearer {{token}}
+
+### Funnel, results per destination country, reply heatmap (office time)
+GET {{baseUrl}}/dashboard/insights?days=30
+Authorization: Bearer {{token}}
+
+### Latest activity: emails sent, replies, bounces, new leads
+GET {{baseUrl}}/dashboard/activity?limit=20
+Authorization: Bearer {{token}}
+
+### Import contacts from CSV (matched by email; `tag` starts the workflows listening to it)
+POST {{baseUrl}}/contacts/import
+Authorization: Bearer {{token}}
+Idempotency-Key: contacts-import-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="tag"
+
+air-intro
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="contacts.csv"
+Content-Type: text/csv
+
+email,first_name,company,country,language,network,office,tags
+deniz@ist-cargo.example,Deniz,IST Cargo,TR,tr,WCA,UAE,vip
+--LaneReach--
+
+### Export leads as CSV (opens in Excel)
+GET {{baseUrl}}/leads/export?status=new
+Authorization: Bearer {{token}}
+
+### Mark a lead won (publishes lead.status_changed: "Lead status changed" workflows start)
+PATCH {{baseUrl}}/leads/{{leadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "won"
+}
+
+### An office's signature picture (PNG/JPEG); HTML emails end with it
+POST {{baseUrl}}/offices/{{officeId}}/signature-image
+Authorization: Bearer {{token}}
+Idempotency-Key: office-signature-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="signature.png"
+Content-Type: image/png
+
+< ./samples/signature.png
+--LaneReach--
+
+### Back to the text signature
+DELETE {{baseUrl}}/offices/{{officeId}}/signature-image
+Authorization: Bearer {{token}}
+
+### An agent's signature picture (switches the agent to image mode)
+POST {{baseUrl}}/senders/{{senderId}}/signature-image
+Authorization: Bearer {{token}}
+Idempotency-Key: agent-signature-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="signature.png"
+Content-Type: image/png
+
+< ./samples/signature.png
+--LaneReach--

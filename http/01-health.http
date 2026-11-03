@@ -1,0 +1,5 @@
+### Liveness (no auth)
+GET {{baseUrl}}/health/live
+
+### Readiness: database, Redis, LLM configuration (503 when any fails)
+GET {{baseUrl}}/health/ready

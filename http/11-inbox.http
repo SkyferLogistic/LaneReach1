@@ -1,0 +1,61 @@
+# Unified inbox: conversations of every agent mailbox, replying in the thread.
+# Threads are addressed with the `thread_id` query parameter (provider ids can contain `/`).
+# Reading needs `workflows:read`; changing and replying needs `ai:review`.
+
+@token = PASTE-A-REVIEWER-PRICING-OR-ADMIN-DEV-TOKEN
+@threadId = PASTE-A-THREAD-ID
+
+### Folders: inbox, unread, awaiting, drafts, snoozed, done, sent, all
+GET {{baseUrl}}/inbox/conversations?folder=inbox&limit=30
+Authorization: Bearer {{token}}
+
+### Filtered: one agent's mailbox, a reply type, a label, assigned to me, search
+GET {{baseUrl}}/inbox/conversations?folder=all&bucket=rate_query&mine=true&search=gulf
+Authorization: Bearer {{token}}
+
+### Numbers next to the folders
+GET {{baseUrl}}/inbox/counts
+Authorization: Bearer {{token}}
+
+### A conversation with its messages (oldest first)
+GET {{baseUrl}}/inbox/conversation?thread_id={{threadId}}
+Authorization: Bearer {{token}}
+
+### Mark read, label and assign
+PATCH {{baseUrl}}/inbox/conversation?thread_id={{threadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "read": true,
+  "labels": ["Reefer", "Urgent"],
+  "assignee_email": "pricing@forwarder.example"
+}
+
+### Snooze until tomorrow morning (it comes back to the inbox then)
+PATCH {{baseUrl}}/inbox/conversation?thread_id={{threadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "snoozed_until": "2026-10-01T09:00:00+04:00"
+}
+
+### Done (back in the inbox when the contact writes again)
+PATCH {{baseUrl}}/inbox/conversation?thread_id={{threadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "done": true
+}
+
+### Reply in the thread: sent by the thread's agent with the signature, through every guardrail
+POST {{baseUrl}}/inbox/conversation/reply?thread_id={{threadId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: inbox-reply-001
+
+{
+  "body": "Hello Ahmed,\n\nThe Chennai → Rotterdam rates follow tomorrow by noon."
+}

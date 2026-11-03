@@ -1,0 +1,91 @@
+# Reply pipeline walkthrough. Run 04-engine.http first so the contact received an email,
+# then simulate their reply and work the review queue.
+# Get an admin dev token first (02-auth.http) and paste it below.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@contactId = PASTE-THE-CONTACT-ID
+
+### Simulate a rate request from the contact (dev/staging only; runs the pipeline after commit)
+# @name simulated
+POST {{baseUrl}}/test-tools/sending-events
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: simulate-rate-query-1
+
+{"type": "reply", "contact_id": "{{contactId}}", "body": "Hi Maya, please quote 2x40HC from Chennai to Rotterdam, monthly, FOB."}
+
+### What the pipeline did (idempotent: returns the stored result)
+POST {{baseUrl}}/ai/replies/{{simulated.response.body.events[0].message_id}}/process
+Authorization: Bearer {{token}}
+
+### Quote-ready lead for pricing
+GET {{baseUrl}}/leads
+Authorization: Bearer {{token}}
+
+### Pending review items
+# @name reviews
+GET {{baseUrl}}/ai/reviews?status=pending
+Authorization: Bearer {{token}}
+
+### One review item (draft, classification and context)
+GET {{baseUrl}}/ai/reviews/{{reviews.response.body.items[0].id}}
+Authorization: Bearer {{token}}
+
+### Approve: sends the draft in the original thread (guardrails still apply)
+POST {{baseUrl}}/ai/reviews/{{reviews.response.body.items[0].id}}/approve
+Authorization: Bearer {{token}}
+Idempotency-Key: approve-1
+
+### ...or correct it first
+POST {{baseUrl}}/ai/reviews/{{reviews.response.body.items[0].id}}/edit-and-approve
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: edit-approve-1
+
+{"body": "Dear Ahmed,\n\nThank you. Our pricing team will send the quote today.\n\nMaya"}
+
+### ...or reject it (nothing is sent)
+POST {{baseUrl}}/ai/reviews/{{reviews.response.body.items[0].id}}/reject
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: reject-1
+
+{"note": "Pricing will call instead."}
+
+### The reply in the outbox (same thread as the intro)
+GET {{baseUrl}}/outbox?contact_id={{contactId}}
+Authorization: Bearer {{token}}
+
+### Simulate a hard bounce (suppresses the contact, stops outreach)
+POST {{baseUrl}}/test-tools/sending-events
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: simulate-bounce-1
+
+{"type": "bounce", "bounce_type": "hard", "contact_id": "{{contactId}}", "body": "550 5.1.1 user unknown"}
+
+### Reply policy for every bucket
+GET {{baseUrl}}/ai/reply-policies
+Authorization: Bearer {{token}}
+
+### Enable auto-send for interested replies (admin only; confident replies only)
+PUT {{baseUrl}}/ai/reply-policies/interested
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"action_mode": "auto_send", "auto_send_enabled": true}
+
+### Restore the default
+PUT {{baseUrl}}/ai/reply-policies/interested
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{}
+
+### Provider webhook (normally sent by the provider). The signature header is
+### t=<unix>,v1=<hex hmac_sha256(secret, t + "." + body)>; compute it for the exact body.
+POST {{baseUrl}}/webhooks/sending/dry_run
+Content-Type: application/json
+X-LaneReach-Signature: t=0,v1=COMPUTE-ME
+
+{"tenant_id": "PASTE-TENANT-ID", "events": [{"event_id": "evt-1", "type": "reply", "occurred_at": "2026-09-28T10:00:00+04:00", "from_email": "ahmed@gulf-importers.example", "body": "Tell me more"}]}

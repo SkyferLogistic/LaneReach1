@@ -1,0 +1,55 @@
+# Auth walkthrough. Works with VS Code REST Client and JetBrains HTTP Client.
+# 1. Start the stack and load the demo tenants: `make up && make seed`
+# 2. List the tenants (dev mode) and put one id in http-client.env.json (`tenantId`).
+# 3. Run the requests in order.
+
+### Tenants you can log in to (AUTH_MODE=dev only; powers the frontend's tenant picker)
+GET {{baseUrl}}/auth/dev-tenants
+
+### Issue a dev token (AUTH_MODE=dev only)
+# @name devToken
+POST {{baseUrl}}/auth/dev-token
+Content-Type: application/json
+
+{
+  "tenant_id": "{{tenantId}}",
+  "subject": "maya@forwarder.example",
+  "roles": ["admin"],
+  "expires_in_seconds": 3600
+}
+
+### Who am I?
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Create an API key (secret is shown once; retries with the same key replay the response)
+# @name apiKey
+POST {{baseUrl}}/auth/api-keys
+Authorization: Bearer {{devToken.response.body.access_token}}
+Content-Type: application/json
+Idempotency-Key: create-crm-key-001
+
+{
+  "name": "CRM sync",
+  "scopes": ["events:write", "workflows:read"]
+}
+
+### Call the API with the API key
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{apiKey.response.body.secret}}
+
+### The key lacks admin:manage -> 403 problem+json
+GET {{baseUrl}}/auth/api-keys
+Authorization: Bearer {{apiKey.response.body.secret}}
+
+### List API keys (cursor pagination)
+GET {{baseUrl}}/auth/api-keys?limit=20
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Revoke the API key
+DELETE {{baseUrl}}/auth/api-keys/{{apiKey.response.body.id}}
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### The revoked key no longer authenticates -> 401
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{apiKey.response.body.secret}}

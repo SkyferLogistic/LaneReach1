@@ -1,0 +1,191 @@
+# Email scripts (SharePoint library), countries & languages, agents and branding.
+# Library layout: Scripts/{Air|Ocean|General}/<script name>/<language>.docx (+ .pdf),
+# Banners/{Air|Ocean}/<CC or country name|default>.png, Brand/logo.png, Brand/badge-*.png.
+# Until SharePoint is configured the library is a local folder (LOCAL_DOCUMENTS_PATH).
+# The upload examples read ./samples/tr.docx and ./samples/TR.png: put your own files there.
+# The CSV office column is matched by office name.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@templateId = PASTE-A-SCRIPT-TEMPLATE-ID
+@senderId = PASTE-AN-AGENT-ID
+@scriptKey = air_usa_canada_air_to_country
+
+### Script × language matrix (18 languages from the countries table)
+GET {{baseUrl}}/scripts
+Authorization: Bearer {{token}}
+
+### One script version (HTML, import warnings, SharePoint links)
+GET {{baseUrl}}/scripts/templates/{{templateId}}
+Authorization: Bearer {{token}}
+
+### Exact preview for a destination country (and optionally an agent or a real contact)
+POST {{baseUrl}}/scripts/templates/{{templateId}}/preview
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "country": "TR",
+  "sender_id": "{{senderId}}"
+}
+
+### Upload a Word script: saved into the library, then imported (PDF = reference copy)
+POST {{baseUrl}}/scripts/upload
+Authorization: Bearer {{token}}
+Idempotency-Key: upload-air-intro-tr-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="script_name"
+
+USA-Canada air to country
+--LaneReach
+Content-Disposition: form-data; name="service_line"
+
+air
+--LaneReach
+Content-Disposition: form-data; name="language"
+
+tr
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="tr.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./samples/tr.docx
+--LaneReach--
+
+### Start a script from text (a Word file is generated in the library)
+POST {{baseUrl}}/scripts/blank
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: blank-ocean-intro-001
+
+{
+  "script_name": "Ocean intro",
+  "service_line": "ocean",
+  "language": "en",
+  "subject": "Ocean freight {to_country}",
+  "body": "Hi {first_name|there},\n\nAny ocean enquiries from the USA or Canada {to_country}?\n\n{banner}\n\nBest regards,\n\n{signature}\n\nYou're receiving this email as a fellow {network} member.\n\n{unsubscribe_link|Unsubscribe here}"
+}
+
+### Sync the library now (also runs every 5 minutes)
+POST {{baseUrl}}/scripts/sync
+Authorization: Bearer {{token}}
+Idempotency-Key: sync-now-001
+
+### AI-translate missing languages (saved as AI drafts; not sent until approved)
+POST {{baseUrl}}/scripts/{{scriptKey}}/translate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: translate-air-001
+
+{
+  "languages": ["fr", "es"]
+}
+
+### Approve an AI draft (needs workflows:publish)
+POST {{baseUrl}}/scripts/templates/{{templateId}}/approve
+Authorization: Bearer {{token}}
+Idempotency-Key: approve-draft-001
+
+### Upload a country banner (omit country for the default banner)
+POST {{baseUrl}}/scripts/banners
+Authorization: Bearer {{token}}
+Idempotency-Key: banner-air-tr-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="service_line"
+
+air
+--LaneReach
+Content-Disposition: form-data; name="country"
+
+TR
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="TR.png"
+Content-Type: image/png
+
+< ./samples/TR.png
+--LaneReach--
+
+### Images in the library (banners, logos, badges)
+GET {{baseUrl}}/scripts/assets
+Authorization: Bearer {{token}}
+
+### Countries & languages
+GET {{baseUrl}}/countries
+Authorization: Bearer {{token}}
+
+### Add or change a country (language = script variant, phrase in that language)
+PUT {{baseUrl}}/countries/BR
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Brazil",
+  "language": "pt-br",
+  "to_country_phrase": "para o Brasil",
+  "allow_language_fallback": true,
+  "is_enabled": true
+}
+
+### Agents: import the 24 agents (CSV columns: name,email,office,service_line,title,phone,daily_cap)
+POST {{baseUrl}}/senders/import
+Authorization: Bearer {{token}}
+Idempotency-Key: agents-import-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="agents.csv"
+Content-Type: text/csv
+
+name,email,office,service_line,title,phone,daily_cap
+Molly Example,molly@forwarder.example,USA/Canada,air,Marketing Executive,+1 905-000-0000,50
+--LaneReach--
+
+### An agent's signature (HTML + text)
+GET {{baseUrl}}/senders/{{senderId}}/signature
+Authorization: Bearer {{token}}
+
+### Branding used by generated signatures
+GET {{baseUrl}}/settings/branding
+Authorization: Bearer {{token}}
+
+### Library connection (local folder or SharePoint; the secret comes from SHAREPOINT_CLIENT_SECRETS)
+GET {{baseUrl}}/settings/library
+Authorization: Bearer {{token}}
+
+###
+PUT {{baseUrl}}/settings/library
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "provider": "sharepoint",
+  "site_url": "https://contoso.sharepoint.com/sites/Marketing",
+  "library_name": "Documents",
+  "root_folder": "LaneReach",
+  "azure_tenant_id": "00000000-0000-0000-0000-000000000000",
+  "client_id": "00000000-0000-0000-0000-000000000000"
+}
+
+### Test the connection
+POST {{baseUrl}}/settings/library/test
+Authorization: Bearer {{token}}
+
+### Brand images for generated signatures: kind = logo | qr | promo | badge (saved to Brand/)
+POST {{baseUrl}}/scripts/brand-images
+Authorization: Bearer {{token}}
+Idempotency-Key: brand-qr-001
+Content-Type: multipart/form-data; boundary=LaneReach
+
+--LaneReach
+Content-Disposition: form-data; name="kind"
+
+qr
+--LaneReach
+Content-Disposition: form-data; name="file"; filename="qr.png"
+Content-Type: image/png
+
+< ./samples/qr.png
+--LaneReach--

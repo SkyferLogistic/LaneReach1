@@ -1,0 +1,96 @@
+# CRM: pipelines, deals (board), tasks and notes.
+# A rate request (reply pipeline or `create_pricing_lead`) opens a deal automatically in the
+# default "Freight quotes" pipeline; moving it to Won/Lost closes it and its lead.
+
+@token = PASTE-A-PRICING-OR-ADMIN-DEV-TOKEN
+@pipelineId = PASTE-A-PIPELINE-ID
+@stageId = PASTE-A-STAGE-ID
+@dealId = PASTE-A-DEAL-ID
+@contactId = PASTE-A-CONTACT-ID
+
+### Pipelines and their stages (the default one is created on first use)
+GET {{baseUrl}}/crm/pipelines
+Authorization: Bearer {{token}}
+
+### A second pipeline (admin): it needs an open, a won and a lost stage
+POST {{baseUrl}}/crm/pipelines
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: pipeline-ocean-contracts-001
+
+{
+  "name": "Ocean contracts",
+  "stages": [
+    {"name": "RFQ received", "kind": "open", "probability": 20},
+    {"name": "Tender submitted", "kind": "open", "probability": 50},
+    {"name": "Awarded", "kind": "won", "probability": 100},
+    {"name": "Not awarded", "kind": "lost"}
+  ]
+}
+
+### The board: deals of a pipeline in stage and card order
+GET {{baseUrl}}/crm/deals?pipeline_id={{pipelineId}}
+Authorization: Bearer {{token}}
+
+### A deal by hand
+POST {{baseUrl}}/crm/deals
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: deal-ist-cargo-001
+
+{
+  "contact_id": "{{contactId}}",
+  "title": "IST Cargo: YYZ → IST monthly air",
+  "value_amount": "4200.00",
+  "currency": "USD",
+  "service_line": "air",
+  "origin": "YYZ CA",
+  "destination": "IST TR"
+}
+
+### Drop it on a stage (index = position in the column; Won/Lost close it)
+POST {{baseUrl}}/crm/deals/{{dealId}}/move
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: deal-move-001
+
+{
+  "stage_id": "{{stageId}}",
+  "index": 0
+}
+
+### Its history: stage changes, value changes, notes, tasks and emails
+GET {{baseUrl}}/crm/deals/{{dealId}}/timeline
+Authorization: Bearer {{token}}
+
+### My open tasks
+GET {{baseUrl}}/crm/tasks?mine=true
+Authorization: Bearer {{token}}
+
+### A task on the deal
+POST {{baseUrl}}/crm/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: task-call-001
+
+{
+  "title": "Send the YYZ → IST rates",
+  "deal_id": "{{dealId}}",
+  "due_at": "2026-10-01T15:00:00-04:00",
+  "priority": "high"
+}
+
+### A note
+POST {{baseUrl}}/crm/notes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Idempotency-Key: note-001
+
+{
+  "deal_id": "{{dealId}}",
+  "body": "Prefers Turkish Cargo; wants a weekly consolidation price."
+}
+
+### Numbers for the dashboard (open value, weighted value, wins, tasks due)
+GET {{baseUrl}}/crm/summary?days=30
+Authorization: Bearer {{token}}

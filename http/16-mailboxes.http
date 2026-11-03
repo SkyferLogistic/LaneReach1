@@ -1,0 +1,42 @@
+# Agent mailboxes: real sending over SMTP and replies over IMAP (SENDING_PROVIDER=smtp).
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@senderId = PASTE-AN-AGENT-ID
+
+### Known providers (servers and ports only)
+GET {{baseUrl}}/mailbox-presets
+Authorization: Bearer {{token}}
+
+### The agent's mailbox and the deployment's sending mode (the password is never returned)
+GET {{baseUrl}}/senders/{{senderId}}/mailbox
+Authorization: Bearer {{token}}
+
+### Connect (admins); leave "password" out later to keep the saved one
+PUT {{baseUrl}}/senders/{{senderId}}/mailbox
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "preset": "microsoft_365",
+  "smtp_host": "smtp.office365.com",
+  "smtp_port": 587,
+  "smtp_security": "starttls",
+  "imap_host": "outlook.office365.com",
+  "imap_port": 993,
+  "imap_security": "ssl",
+  "username": "agent@your-forwarder.com",
+  "password": "APP-PASSWORD"
+}
+
+### Test the login (nothing is sent or read); status becomes verified or error
+POST {{baseUrl}}/senders/{{senderId}}/mailbox/test
+Authorization: Bearer {{token}}
+Idempotency-Key: mailbox-test-1
+
+### Emails waiting for delivery, then what was sent or failed
+GET {{baseUrl}}/outbox?status=queued
+Authorization: Bearer {{token}}
+
+### Disconnect (deletes the saved password)
+DELETE {{baseUrl}}/senders/{{senderId}}/mailbox
+Authorization: Bearer {{token}}

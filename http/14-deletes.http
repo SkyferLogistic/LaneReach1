@@ -1,0 +1,21 @@
+# Deleting records. Rules keep history safe: in-use records answer 409 with what to do instead.
+
+@token = PASTE-AN-ADMIN-DEV-TOKEN
+@workflowId = PASTE-A-WORKFLOW-ID
+@senderId = PASTE-AN-AGENT-ID
+@contactId = PASTE-A-CONTACT-ID
+
+### A draft or finished campaign (409 while enrollments run or another workflow uses it)
+DELETE {{baseUrl}}/automation/workflows/{{workflowId}}
+Authorization: Bearer {{token}}
+
+### An agent that never sent (409 otherwise: switch it off with PATCH /senders/{id})
+DELETE {{baseUrl}}/senders/{{senderId}}
+Authorization: Bearer {{token}}
+
+### Erase a contact and every copy of their data; the address stays suppressed (admins)
+DELETE {{baseUrl}}/contacts/{{contactId}}
+Authorization: Bearer {{token}}
+
+### How the console signs in (public): dev, or OIDC authority/client id for "Sign in with Microsoft"
+GET {{baseUrl}}/auth/config

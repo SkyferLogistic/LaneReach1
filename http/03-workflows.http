@@ -1,0 +1,97 @@
+# Workflow walkthrough: catalog → create draft → validate → fix → publish → versions.
+# Run 02-auth.http first to get a dev token (use a campaign_manager or admin role).
+
+### Get a dev token that can build and publish workflows
+# @name devToken
+POST {{baseUrl}}/auth/dev-token
+Content-Type: application/json
+
+{"tenant_id": "{{tenantId}}", "subject": "maya@forwarder.example", "roles": ["campaign_manager"]}
+
+### Node catalog (palette + JSON Schema of every config form)
+GET {{baseUrl}}/automation/nodes
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Fields the condition builder can use
+GET {{baseUrl}}/automation/condition-fields
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Create a draft: two emails with no wait between them (invalid on purpose)
+# @name workflow
+POST {{baseUrl}}/automation/workflows
+Authorization: Bearer {{devToken.response.body.access_token}}
+Content-Type: application/json
+Idempotency-Key: create-uae-intro-001
+
+{
+  "name": "UAE importers intro",
+  "description": "Intro + follow-up for UAE importers",
+  "graph": {
+    "trigger": {"id": "trigger", "type": "trigger_tag_added", "config": {"tag": "uae-importers"}},
+    "nodes": [
+      {"id": "send_intro", "type": "send_email", "config": {"office_id": "6f1c1f3e-3d7b-4c55-9b38-7c2f0f5d9a11", "template_key": "intro"}},
+      {"id": "send_follow_up", "type": "send_email", "config": {"office_id": "6f1c1f3e-3d7b-4c55-9b38-7c2f0f5d9a11", "template_key": "follow_up_1"}},
+      {"id": "done", "type": "stop", "config": {}}
+    ],
+    "edges": [
+      {"source": "trigger", "target": "send_intro"},
+      {"source": "send_intro", "target": "send_follow_up"},
+      {"source": "send_follow_up", "target": "done"}
+    ]
+  }
+}
+
+### Validate: send_without_wait on send_follow_up
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/validate
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Publishing is refused (422 workflow-invalid, errors name the node)
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/publish
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Save version 2 with a 5-business-day wait
+PUT {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}
+Authorization: Bearer {{devToken.response.body.access_token}}
+Content-Type: application/json
+
+{
+  "base_version": 1,
+  "graph": {
+    "trigger": {"id": "trigger", "type": "trigger_tag_added", "config": {"tag": "uae-importers"}},
+    "nodes": [
+      {"id": "send_intro", "type": "send_email", "config": {"office_id": "6f1c1f3e-3d7b-4c55-9b38-7c2f0f5d9a11", "template_key": "intro"}},
+      {"id": "wait_5", "type": "wait_business_days", "config": {"days": 5}},
+      {"id": "send_follow_up", "type": "send_email", "config": {"office_id": "6f1c1f3e-3d7b-4c55-9b38-7c2f0f5d9a11", "template_key": "follow_up_1"}},
+      {"id": "done", "type": "stop", "config": {}}
+    ],
+    "edges": [
+      {"source": "trigger", "target": "send_intro"},
+      {"source": "send_intro", "target": "wait_5"},
+      {"source": "wait_5", "target": "send_follow_up"},
+      {"source": "send_follow_up", "target": "done"}
+    ]
+  }
+}
+
+### Publish version 2
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/publish
+Authorization: Bearer {{devToken.response.body.access_token}}
+Content-Type: application/json
+
+{"version": 2}
+
+### Version history
+GET {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/versions
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### Pause / resume
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/pause
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+###
+POST {{baseUrl}}/automation/workflows/{{workflow.response.body.id}}/resume
+Authorization: Bearer {{devToken.response.body.access_token}}
+
+### List published workflows
+GET {{baseUrl}}/automation/workflows?status=published
+Authorization: Bearer {{devToken.response.body.access_token}}

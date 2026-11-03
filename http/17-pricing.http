@@ -1,0 +1,93 @@
+# Pricing: rate sheets, rates, rate websites, a deal's matching rates, priced drafts, market checks.
+
+@token = PASTE-A-PRICING-OR-ADMIN-DEV-TOKEN
+@sheetId = PASTE-A-RATE-SHEET-ID
+@dealId = PASTE-A-DEAL-ID
+@quoteId = PASTE-A-DRAFT-QUOTE-ID
+
+### Rate sheets (library Rates/ folder and uploads)
+GET {{baseUrl}}/pricing/sheets
+Authorization: Bearer {{token}}
+
+### Upload an Excel or CSV sheet (same file name replaces its rates)
+POST {{baseUrl}}/pricing/sheets/upload
+Authorization: Bearer {{token}}
+Idempotency-Key: upload-rates-1
+Content-Type: multipart/form-data; boundary=rates
+
+--rates
+Content-Disposition: form-data; name="default_currency"
+
+USD
+--rates
+Content-Disposition: form-data; name="file"; filename="rates.csv"
+Content-Type: text/csv
+
+POL,POD,Equipment,Charge,Rate,Currency,Valid till,TT,Line
+Chennai,Jebel Ali,40HC,Ocean freight,1450,USD,31/12/2026,14,MSC
+,,40HC,BAF,180,USD,,,
+--rates--
+
+### A sheet with its row problems and detected columns
+GET {{baseUrl}}/pricing/sheets/{{sheetId}}
+Authorization: Bearer {{token}}
+
+### Choose the price column of a tab and re-import
+PUT {{baseUrl}}/pricing/sheets/{{sheetId}}/mapping
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "mapping": { "CSV": { "amount": "Rate" } } }
+
+### Search rates (valid today unless include_expired=true)
+GET {{baseUrl}}/pricing/rates?origin=Chennai&destination=AEJEA&limit=20
+Authorization: Bearer {{token}}
+
+### Add a rate website (https link, no login stored)
+POST {{baseUrl}}/pricing/sources
+Authorization: Bearer {{token}}
+Idempotency-Key: source-1
+Content-Type: application/json
+
+{
+  "name": "Rate portal",
+  "website": "https://rates.example",
+  "lane_url_template": "https://rates.example/search?from={origin}&to={destination}&eq={equipment}",
+  "service_lines": ["ocean"]
+}
+
+### A deal's matching rates, website links and market checks
+GET {{baseUrl}}/pricing/deals/{{dealId}}
+Authorization: Bearer {{token}}
+
+### Let the AI map an unusual lane spelling onto the places in the sheets
+POST {{baseUrl}}/pricing/deals/{{dealId}}/match-lane
+Authorization: Bearer {{token}}
+
+### Draft a quote from the best option (10 % markup); never sent automatically
+POST {{baseUrl}}/pricing/deals/{{dealId}}/quotes
+Authorization: Bearer {{token}}
+Idempotency-Key: draft-from-rates-1
+Content-Type: application/json
+
+{ "option_index": 0, "markup_percent": 10 }
+
+### Fill an existing draft from the sheets
+POST {{baseUrl}}/pricing/quotes/{{quoteId}}/fill
+Authorization: Bearer {{token}}
+Idempotency-Key: fill-1
+Content-Type: application/json
+
+{}
+
+### Record a rate seen on a website
+POST {{baseUrl}}/pricing/deals/{{dealId}}/checks
+Authorization: Bearer {{token}}
+Idempotency-Key: check-1
+Content-Type: application/json
+
+{ "source_name": "Rate portal", "amount": 1400, "currency": "USD", "unit": "container", "equipment": "40HC" }
+
+### Lane history (sheet and market rates)
+GET {{baseUrl}}/pricing/lanes/history?origin=INMAA&destination=Jebel%20Ali&equipment=40HC
+Authorization: Bearer {{token}}
